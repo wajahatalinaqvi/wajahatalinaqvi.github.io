@@ -607,7 +607,6 @@ main {
   max-width: 80px;
   min-width: 80px;
   object-fit: cover;
-  filter: grayscale(1);
 }
 
 .skills-name {
