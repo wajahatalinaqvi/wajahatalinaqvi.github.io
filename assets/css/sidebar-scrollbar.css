@@ -1,0 +1,24 @@
+/* Sidebar wrapper scrollbar styling */
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track {
+  background: rgba(14, 28, 43, 0.2);
+  border-radius: 10px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(64, 112, 244, 0.5);
+  border-radius: 10px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(64, 112, 244, 0.8);
+}
+
+/* Sidebar wrapper scrollbar for Firefox */
+.sidebar-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(64, 112, 244, 0.5) rgba(14, 28, 43, 0.2);
+}

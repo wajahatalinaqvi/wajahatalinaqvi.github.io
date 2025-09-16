@@ -1,0 +1,54 @@
+/* Footer styles */
+.footer {
+  background-color: rgba(14, 28, 43, 0.95);
+  padding: 15px 0;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  z-index: 90;
+  position: relative;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  margin: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+  color: var(--orange-yellow-crayola);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 767px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer {
+    margin-bottom: 70px; /* Make room for fixed bottom navbar */
+  }
+}

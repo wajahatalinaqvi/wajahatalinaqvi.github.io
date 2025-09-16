@@ -1,0 +1,13 @@
+/* Blue glow effect for the sidebar */
+main::before {
+  content: "";
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  top: 40%;
+  left: 150px;
+  z-index: -1;
+  background: radial-gradient(circle at center, rgba(64, 112, 244, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}

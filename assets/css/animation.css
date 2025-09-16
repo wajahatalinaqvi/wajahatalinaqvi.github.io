@@ -1,0 +1,228 @@
+#background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Animation overlay for better visibility of content */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(14, 28, 43, 0.9), rgba(20, 40, 70, 0.7));
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Loading animation for Three.js initialization */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0e1c2b 0%, #162c42 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s;
+}
+
+.loader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-circle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top: 3px solid #4070f4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-circle::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 2px solid rgba(64, 112, 244, 0.2);
+    animation: pulse 2s ease-out infinite;
+}
+
+.loader::after {
+    content: 'Loading your experience...';
+    color: rgba(255,255,255,0.7);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    letter-spacing: 1px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+    100% { transform: scale(1); opacity: 0.6; }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Enhanced interaction animations */
+.sidebar, article, .service-item, .skills-item, .icon-box {
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+                background-color 0.3s ease;
+}
+
+/* Subtle shine effect for cards */
+/* .sidebar::after, */
+article::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 55%
+    );
+    transform: rotate(30deg) translateY(100%);
+    transition: transform 1s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.sidebar:hover::after,
+article:hover::after {
+    transform: rotate(30deg) translateY(-100%);
+}
+
+/* Animation for page transitions */
+@keyframes fadeSlideUp {
+    0% { 
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* More pronounced animation for active articles */
+article.active {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Pulse animation for primary buttons */
+.form-btn,
+.info_more-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.form-btn::after,
+.info_more-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: inherit;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+    pointer-events: none;
+}
+
+.form-btn:active::after,
+.info_more-btn:active::after {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
+    transition: 0s;
+}
+
+/* Enhanced navbar highlighting effect - removed underline */
+
+/* Starfield styling */
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* Add a subtle depth effect to the background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(14, 28, 43, 0) 0%,
+        rgba(14, 28, 43, 0.3) 70%,
+        rgba(14, 28, 43, 0.5) 100%
+    );
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Simplified avatar styling */
+.avatar-box {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle hover effect */
+.avatar-box:hover {
+    box-shadow: 0 10px 25px rgba(64, 112, 244, 0.2);
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    #background-animation {
+        opacity: 0.3; /* Reduce intensity on mobile */
+    }
+    
+    .loader-circle {
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -1,0 +1,790 @@
+/*-----------------------------------*\
+  #LAYOUT - Full height page with scrollable content area
+\*-----------------------------------*/
+
+/* Set html and body to full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent double scrollbars */
+}
+
+/* Main container full height */
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+  margin: 0 auto;
+  padding: 15px;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+@media (min-width: 1250px) {
+  main {
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 1280px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+  
+  .sidebar-wrapper {
+    max-width: 350px;
+    width: 30%;
+    height: 98vh;
+    max-height: 98vh;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-right: 5px; /* Space for scrollbar */
+    position: sticky;
+    top: 15px;
+  }
+  
+  .sidebar {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible; /* Explicitly set overflow to visible */
+  }
+}
+
+/* Medium desktop layout */
+@media (min-width: 992px) and (max-width: 1249px) {
+  main {
+    padding: 0;
+    gap: 0;
+    flex-direction: row;
+  }
+  
+  .sidebar-wrapper {
+    width: 300px;
+    min-width: 300px;
+    /* height: 100vh; */
+    flex-shrink: 0;
+    margin: 0;
+    overflow-y: visible;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    flex-direction: column;
+    height: auto;
+    /* max-height: none; */
+  }
+  
+  .sidebar-info {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+  
+  .avatar-box {
+    margin: 0;
+    width: 90px;
+    height: 90px;
+  }
+  
+  .info-content {
+    flex: 1;
+  }
+  
+  .info-content .name {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+  }
+  
+  .info-content .title {
+    font-size: 1.2rem;
+  }
+  
+  .navbar-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .header-title {
+    font-size: 18px;
+  }
+}
+
+/* Sidebar wrapper styling */
+.sidebar-wrapper {
+  width: 100%;
+  z-index: 10;
+  margin-bottom: 15px;
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: 100%;
+  z-index: 10;
+  margin-bottom: 0;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease;
+
+}
+
+/* Add blue glow effect behind sidebar */
+/* .sidebar::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(64, 112, 244, 0.15) 0%, transparent 60%);
+  z-index: -1;
+  pointer-events: none;
+} */
+
+@media (min-width: 992px) {
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+  }
+ 
+}
+
+/* Main content area with scrolling */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: calc(100vh - 30px); /* Account for main padding */
+}
+
+/* Header container for title and navbar side by side */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-radius: 24px;
+  padding: 12px 25px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Page title in header */
+.header-title {
+  margin: 0 0 10px 0; /* Add bottom margin */
+  padding: 0;
+  font-size: 20px; /* Slightly smaller */
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
+  letter-spacing: 0.5px;
+  animation: titlePulse 3s infinite alternate;
+  align-self: flex-start; /* Align to the left */
+}
+
+/* Header title hover effect */
+.header-container:hover .header-title {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  color: #4070f4;
+  transform: translateY(-2px);
+}
+
+/* Add subtle underline to header title */
+.header-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(64, 112, 244, 0.9), rgba(255, 255, 255, 0.5));
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Extend underline on hover */
+.header-container:hover .header-title::after {
+  width: 70px;
+}
+
+/* Fixed navbar now inside header container */
+.navbar {
+  padding: 0 10px;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Override navbar list styles for side-by-side layout */
+.navbar-list {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  gap: 16px;
+  height: 100%;
+}
+
+/* Adjust navbar link padding for header layout */
+.navbar-link {
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  border-bottom: none;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  font-size: 14px; /* Smaller font size */
+}
+
+/* Enhanced navbar link effects */
+.navbar-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  text-decoration: none;
+  border-bottom: none;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-link.active {
+  background: rgba(64, 112, 244, 0.5);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  border-bottom: none;
+  box-shadow: 0 4px 12px rgba(64, 112, 244, 0.3);
+}
+
+/* Mobile layout with bottom navigation */
+@media (max-width: 767px) {
+  body {
+    overflow: auto;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px; /* Space for fixed bottom navbar */
+    overflow: auto;
+    max-height: none;
+    min-height: 100vh;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .sidebar-wrapper {
+    height: auto;
+    max-height: none;
+    overflow-y: visible;
+    width: 100%;
+  }
+  
+  .sidebar {
+    height: auto;
+    max-height: 130px;
+  }
+  
+  .header-container {
+    position: fixed;
+    bottom: -1px;
+    left: 10px;
+    right: 10px;
+    top: auto;
+    height:59px;
+    padding: 12px 15px;
+    border-radius: 20px;
+    margin: 0;
+    z-index: 100;
+    width: auto;
+    background: rgba(14, 28, 43, 1%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  
+  .header-title {
+    display: none; /* Hide title on mobile */
+  }
+  
+  .navbar {
+    width: 100%;
+  }
+  
+  .navbar-list {
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+  
+  .navbar-link {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  
+  .navbar-link.active {
+    background: rgba(64, 112, 244, 0.5);
+    box-shadow: 0 4px 15px rgba(64, 112, 244, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .navbar-link.active {
+    background: rgba(64, 112, 244, 0.3);
+    box-shadow: 0 4px 15px rgba(64, 112, 244, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Better content spacing on mobile */
+  article[data-page] {
+    padding: 15px;
+  }
+  
+  /* Better sidebar layout on small screens */
+  .sidebar-info {
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .avatar-box {
+    margin: 0;
+    width: 65px;
+    height: 65px;
+  }
+  
+  .info-content .name {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+  
+  .info-content .title {
+    font-size: 1rem;
+  }
+  
+  .main-content {
+    margin-bottom: 0;
+    overflow: visible;
+    max-height: none;
+  }
+  
+  .articles-container {
+    overflow: visible;
+    height: auto;
+  }
+}
+
+.header-container.scrolled {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 3%);
+}
+
+/* Scrollable articles container */
+.articles-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* iOS-style scrollbar for Chrome, Safari and Opera */
+.articles-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.articles-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.articles-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.articles-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* iOS-style scrollbar for IE, Edge and Firefox */
+.articles-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive adjustments for tablets */
+@media (max-width: 1249px) and (min-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  
+  main {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    overflow: auto;
+    height: auto;
+  }
+  
+  .sidebar {
+    position: relative;
+    top: 0;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    padding: 20px;
+    background: rgba(20, 40, 70, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .main-content {
+    max-height: none;
+    width: 100%;
+    flex: 1;
+  }
+  
+  /* Header container positioning for 1249px and below */
+  .header-container {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(20, 40, 60, 0.9);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  
+  .header-title {
+    font-size: 20px;
+    margin: 0;
+    display: inline-block;
+  }
+  
+  .navbar {
+    position: relative;
+    width:26rem;
+  }
+  
+  .navbar-list {
+    gap: 10px;
+  }
+  
+  .navbar-link {
+    padding: 8px 16px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .navbar-link.active {
+    background: rgba(64, 112, 244, 0.5);
+    box-shadow: 0 4px 12px rgba(64, 112, 244, 0.25);
+  }
+  
+  .articles-container {
+    background: rgba(20, 40, 70, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    overflow-y: auto;
+    height: auto;
+    min-height: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .about-me {
+    padding-top: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  article[data-page] {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+  
+  article p {
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  /* Better content flow for tablets and small laptops */
+  .sidebar-info {
+    gap: 15px;
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+  }
+  
+  .avatar-box {
+    margin: 0;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .info-content .name {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+  }
+  
+  .articles-container {
+    overflow: visible;
+  }
+}
+
+/* General tablet and mobile styles */
+@media (max-width: 1249px) {
+  main {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+   .info-content{
+    flex:1;
+  }
+  
+  .sidebar {
+    position: relative;
+    top: 0;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .main-content {
+    max-height: none;
+    width: 100%;
+  }
+  
+  /* Make article container look like the image */
+  article[data-page] {
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+/* Animation for header title */
+@keyframes titlePulse {
+  0% {
+    text-shadow: 0 0 5px rgba(64, 112, 244, 0.2);
+  }
+  100% {
+    text-shadow: 0 0 12px rgba(64, 112, 244, 0.5);
+  }
+}
+
+/* Animation for page transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Article styling */
+article[data-page] {
+  min-height: 100%;
+  padding: 20px;
+  border-radius: 24px;
+}
+
+article[data-page].active {
+  display: block;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Hide inactive articles */
+article[data-page]:not(.active) {
+  display: none;
+}
+
+/* Style headings inside articles */
+article[data-page] h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #fff;
+  position: relative;
+}
+
+article[data-page] h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #ffa500;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+@media (max-width: 576px) {
+.sidebar{
+      padding: 8px 29px;
+}
+}
+/* Small mobile screen adjustments */
+@media (max-width: 480px) {
+  main {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .sidebar {
+    border-radius: 16px;
+    padding: 15px;
+  }
+  
+  .header-container {
+    padding: 10px;
+    border-radius: 16px;
+    bottom: -1px;
+    left: 8px;
+    right: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    gap: 12px;
+  }
+  
+  .articles-container {
+    padding: 15px;
+    border-radius: 16px;
+  }
+  
+  /* Better typography for small screens */
+  article[data-page] h2 {
+    font-size: 24px;
+  }
+  
+  h1 {
+    font-size: 26px;
+  }
+  
+  h2 {
+    font-size: 22px;
+  }
+  
+  h3 {
+    font-size: 18px;
+  }
+  
+  /* Make text more readable on small screens */
+  p, li {
+    font-size: 15px;
+  }
+  
+  /* Adjust navbar for smaller screens */
+  .navbar-list {
+    gap: 4px;
+  }
+  
+  .navbar-link {
+    padding: 6px 10px;
+  }
+  
+  article[data-page] {
+    padding: 15px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  main {
+    padding: 8px;
+  }
+  
+  .sidebar {
+    padding: 12px;
+  }
+  
+  .avatar-box {
+    transform: scale(0.9);
+    width: 60px;
+    height: 60px;
+  }
+  
+  .navbar-link {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  
+  .articles-container {
+    padding: 12px;
+  }
+  
+  .info-content .name {
+    font-size: 0.8rem;
+  }
+  
+  .info-content .title {
+    font-size: 0.6rem;
+  }
+  
+  .header-container {
+    padding: 8px;
+  }
+}

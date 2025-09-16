@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wajahat-Personal Portfolio</title>
+  <meta name="description" content="Wajahat Ali Naqvi - Front-end Developer Portfolio showcasing projects and skills in React, Angular, and web development">
+  <title>Wajahat Ali Naqvi | Front-end Developer Portfolio</title>
 
   <!--
     - favicon
@@ -23,9 +24,48 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!--
+    - animation css
+  -->
+  <link rel="stylesheet" href="./assets/css/animation.css">
+  
+  <!--
+    - gradient background effects css
+  -->
+  <link rel="stylesheet" href="./assets/css/gradient-background.css">
+  
+  <!--
+    - layout css for full height and scrollable content
+  -->
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  
+  <!--
+    - loader css
+  -->
+  <link rel="stylesheet" href="./assets/css/loader.css">
+  
+  <!--
+    - sidebar scrollbar css
+  -->
+  <link rel="stylesheet" href="./assets/css/sidebar-scrollbar.css">
+  
+  <!--
+    - footer css
+  -->
+  <link rel="stylesheet" href="./assets/css/footer.css">
+  
+  <!--
+    - glow effects css
+  -->
+  <link rel="stylesheet" href="./assets/css/glow-effects.css">
 </head>
 
 <body>
+  <!-- Loading screen -->
+  <div class="loader">
+    <div class="loader-circle"></div>
+  </div>
 
   <!--
     - #MAIN
@@ -34,16 +74,20 @@
   <main>
 
     <!--
-      - #SIDEBAR
+      - #SIDEBAR WRAPPER
     -->
+    <div class="sidebar-wrapper">
+      <!--
+        - #SIDEBAR
+      -->
 
-    <aside class="sidebar" data-sidebar>
+      <aside class="sidebar" data-sidebar>
 
-      <div class="sidebar-info">
+        <div class="sidebar-info">
 
-        <figure class="avatar-box">
-          <img src="./assets/images/DpHere.png" alt="Wajahat Naqvi" width="80">
-        </figure>
+          <figure class="avatar-box">
+            <img src="./assets/images/LinkednDp.jpeg" alt="Wajahat Naqvi" width="65">
+          </figure>
 
         <div class="info-content">
           <h1 class="name" title="Wajahat Naqvi">Wajahat Naqvi</h1>
@@ -79,7 +123,7 @@
 
           </li>
 
-          <li class="contact-item">
+          <!-- <li class="contact-item">
 
             <div class="icon-box">
               <ion-icon name="phone-portrait-outline"></ion-icon>
@@ -91,7 +135,7 @@
               <a href="tel:+12133522795" class="contact-link">+92 3204564409</a>
             </div>
 
-          </li>
+          </li> -->
 
           <li class="contact-item">
 
@@ -150,6 +194,7 @@
       </div>
 
     </aside>
+    </div><!-- End of sidebar-wrapper -->
 
 
 
@@ -165,35 +210,41 @@
         - #NAVBAR
       -->
 
-      <nav class="navbar">
+      <!--
+        - #HEADER CONTAINER (Title and navbar side by side)
+      -->
+      <div class="header-container">
+        <h2 class="h2 header-title">About Me</h2>
 
-        <ul class="navbar-list">
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <button class="navbar-link active" data-nav-link>About</button>
+            </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Resume</button>
+            </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Portfolio</button>
+            </li>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
+            <!-- <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Blog</button>
+            </li> -->
 
-          <!-- <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li> -->
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Contact</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
+      <!--
+        - #SCROLLABLE CONTENT AREA
+      -->
+      <div class="articles-container">
 
 
 
@@ -201,15 +252,11 @@
         - #ABOUT
       -->
 
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
+      <article class="about active" data-page="about">
 
         <section class="about-text">
           <p>
-            I'm a Front-End Developer with one year of experience. I specialize in making user-friendly web applications
+            I'm a Front-End Developer with 2+ year of experience. I specialize in making user-friendly web applications
             using Angular TypeScript, ReactJS, and Shopify Liquid. Recently, I've been focusing on Shopify web apps. I
             make sure the web apps I create are easy to use and look good on phones, tablets, and computers.
           </p>
@@ -235,8 +282,7 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg
-                " alt="design icon" width="40">
+                <img src="./assets/images/icons8-web-50.png" alt="design icon" width="40">
               </div>
 
               <div class="service-content-box">
@@ -252,7 +298,7 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+                <img src="./assets/images/icons8-web-development-50.png" alt="Web development icon" width="40">
               </div>
 
               <div class="service-content-box">
@@ -268,7 +314,7 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
+                <img src="./assets/images/icons8-mobile-phone-50.png" alt="mobile app icon" width="40">
               </div>
 
               <div class="service-content-box">
@@ -284,7 +330,7 @@
             <li class="service-item">
 
               <div class="service-icon-box">
-                <img src="./assets/images/shopify.svg" alt="camera icon" width="40">
+                <img src="./assets/images/icons8-shopify-50.png" alt="camera icon" width="40">
               </div>
 
               <div class="service-content-box">
@@ -588,10 +634,6 @@
 
       <article class="resume" data-page="resume">
 
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
         <section class="timeline">
 
           <div class="title-wrapper">
@@ -789,10 +831,6 @@
       -->
 
       <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
 
         <section class="projects">
 
@@ -1273,10 +1311,6 @@
 
       <article class="contact" data-page="contact">
 
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
         <section class="mapbox" data-mapbox>
           <figure>
             <iframe
@@ -1307,15 +1341,35 @@
 
 
       </article>
+      
+      </div> <!-- End of articles-container -->
 
-    </div>
+    </div> <!-- End of main-content -->
 
   </main>
 
+  <!-- Footer -->
+  <!-- <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; <span id="copyright-year">2023</span> Wajahat Ali Naqvi. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://github.com/wajahatalinaqvi" aria-label="GitHub Profile">
+          <ion-icon name="logo-github"></ion-icon>
+        </a>
+        <a href="https://linkedin.com/in/wajahat-ali-naqvi" aria-label="LinkedIn Profile">
+          <ion-icon name="logo-linkedin"></ion-icon>
+        </a>
+        <a href="mailto:wajahatalinaqvi@gmail.com" aria-label="Email">
+          <ion-icon name="mail-outline"></ion-icon>
+        </a>
+      </div>
+    </div>
+  </footer> -->
 
-
-
-
+  <!--
+    - Background animation container
+  -->
+  <div id="animation-container"></div>
 
   <!--
     - custom js link
@@ -1327,6 +1381,39 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!--
+    - Three.js library
+  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!--
+    - Gradient background animation script
+  -->
+  <script src="./assets/js/gradient-background.js"></script>
+  
+  <!--
+    - Scrollable layout functionality
+  -->
+  <script src="./assets/js/scrollable-layout.js"></script>
+  
+  <!--
+    - Footer with dynamic copyright year
+  -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const year = new Date().getFullYear();
+      document.getElementById('copyright-year').textContent = year;
+    });
+  </script>
+</body>
+
+  <script>
+    // Loading screen handler
+    window.addEventListener('load', function() {
+      document.querySelector('.loader').style.display = 'none';
+    });
+  </script>
 
 </body>
 

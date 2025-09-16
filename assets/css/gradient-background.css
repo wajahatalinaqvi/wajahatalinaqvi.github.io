@@ -1,0 +1,119 @@
+/**
+ * Gradient Background Styles
+ */
+
+/* Canvas container */
+#gradient-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* Add subtle overlay for better text readability */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 28, 43, 0.4) 0%,
+    rgba(22, 44, 66, 0.2) 50%,
+    rgba(14, 28, 43, 0.4) 100%
+  );
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Add subtle depth to UI elements */
+.sidebar,
+article {
+  position: relative;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Subtle shimmer effect on cards */
+/* .sidebar::before,
+article::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  z-index: 1;
+  pointer-events: none;
+  animation: shimmer 8s ease-in-out infinite;
+  opacity: 0.5;
+} */
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  45% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Alternate animation timing */
+article::before {
+  animation-delay: 4s;
+}
+
+/* Enhanced visual depth for buttons and interactive elements */
+.icon-box,
+.form-btn,
+.info_more-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.icon-box::after,
+.form-btn::after,
+.info_more-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    transparent
+  );
+  opacity: 0.3;
+  border-radius: 50%;
+  filter: blur(3px);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.icon-box:hover::after,
+.form-btn:hover::after,
+.info_more-btn:hover::after {
+  opacity: 0.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body::after {
+    background: linear-gradient(
+      135deg,
+      rgba(14, 28, 43, 0.6) 0%,
+      rgba(22, 44, 66, 0.4) 100%
+    );
+  }
+}

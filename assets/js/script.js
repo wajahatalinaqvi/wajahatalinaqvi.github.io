@@ -1,6 +1,19 @@
 'use strict';
 
-
+// Page loader
+window.addEventListener('load', function() {
+  const loader = document.querySelector('.loader');
+  
+  // Hide loader after page is fully loaded
+  setTimeout(function() {
+    loader.classList.add('hidden');
+  }, 500);
+  
+  // Remove loader from DOM after animation completes
+  setTimeout(function() {
+    loader.style.display = 'none';
+  }, 1000);
+});
 
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
@@ -54,6 +67,31 @@ modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
 
+// Handle image loading with animation
+document.addEventListener('DOMContentLoaded', function() {
+  const projectImages = document.querySelectorAll('.project-img');
+  
+  projectImages.forEach(imgContainer => {
+    const img = imgContainer.querySelector('img');
+    
+    // Add loading class initially
+    imgContainer.classList.add('loading');
+    
+    // When image is loaded, remove loading class
+    if (img.complete) {
+      imgContainer.classList.remove('loading');
+    } else {
+      img.addEventListener('load', function() {
+        imgContainer.classList.remove('loading');
+      });
+      
+      img.addEventListener('error', function() {
+        imgContainer.classList.remove('loading');
+        // Could add an error state here if needed
+      });
+    }
+  });
+});
 
 // custom select variables
 const select = document.querySelector("[data-select]");
@@ -139,6 +177,7 @@ for (let i = 0; i < formInputs.length; i++) {
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
+const headerTitle = document.querySelector(".header-title");
 
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
@@ -148,7 +187,17 @@ for (let i = 0; i < navigationLinks.length; i++) {
       if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
         pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
+        
+        // Update header title based on the active page (if visible)
+        if (headerTitle) {
+          headerTitle.textContent = this.innerHTML;
+        }
+        
+        // Smooth scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       } else {
         pages[i].classList.remove("active");
         navigationLinks[i].classList.remove("active");
