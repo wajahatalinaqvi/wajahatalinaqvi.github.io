@@ -39,12 +39,12 @@ class GradientWaveBackground {
     // Initialize time
     this.time = 0;
     
-    // Colors for the gradient - professional blue theme
+    // Colors for the gradient - deeper dark theme matching Three.js bg
     this.colors = [
-      { r: 14, g: 28, b: 43, a: 1 },     // Deep navy
-      { r: 22, g: 44, b: 66, a: 1 },     // Medium blue
-      { r: 30, g: 60, b: 90, a: 0.5 },   // Blue
-      { r: 40, g: 70, b: 110, a: 0.3 },  // Light blue
+      { r: 6,  g: 13, b: 26,  a: 1 },     // Very deep navy
+      { r: 15, g: 31, b: 58,  a: 1 },     // Deep blue
+      { r: 29, g: 58, b: 120, a: 0.5 },   // Electric blue
+      { r: 37, g: 99, b: 235, a: 0.2 },   // Bright blue
     ];
     
     // Create gradient points that will move around

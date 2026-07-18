@@ -1,55 +1,53 @@
 /*-----------------------------------*\
-  #LAYOUT - Full height page with scrollable content area
+  #LAYOUT - Fixed viewport with internal scroll on content
 \*-----------------------------------*/
 
-/* Set html and body to full height */
+/* Lock the page to viewport — only articles-container scrolls */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent double scrollbars */
+  overflow: hidden;
 }
 
-/* Main container full height */
+/* Main flex row fills the full screen */
 main {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  max-height: 100vh;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 15px;
-  overflow: hidden;
+  padding: 20px 15px;
+  gap: 20px;
   box-sizing: border-box;
-  position: relative;
+  overflow: hidden;
 }
 
+/* Desktop: sidebar takes fixed width, stays in place */
 @media (min-width: 1250px) {
   main {
-    flex-direction: row;
-    align-items: flex-start;
-    max-width: 1280px;
-    margin: 0 auto;
-    gap: 20px;
+    padding: 20px 25px;
+    gap: 24px;
   }
-  
+
   .sidebar-wrapper {
     max-width: 350px;
     width: 30%;
-    height: 98vh;
-    max-height: 98vh;
+    flex-shrink: 0;
+    height: 100%;
     overflow-y: auto;
-    scrollbar-gutter: stable;
-    padding-right: 5px; /* Space for scrollbar */
-    position: sticky;
-    top: 15px;
+    overflow-x: hidden;
+    scrollbar-width: none;
   }
-  
+
+  .sidebar-wrapper::-webkit-scrollbar { display: none; }
+
   .sidebar {
     max-width: 100%;
     width: 100%;
     height: auto;
-    max-height: none;
-    overflow: visible; /* Explicitly set overflow to visible */
+    overflow: visible;
   }
 }
 
@@ -131,13 +129,12 @@ main {
   z-index: 10;
   margin-bottom: 0;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   transition: all 0.3s ease;
-
 }
 
 /* Add blue glow effect behind sidebar */
@@ -161,13 +158,14 @@ main {
  
 }
 
-/* Main content area with scrolling */
+/* Main content area — flex column, header fixed, articles scroll */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-height: calc(100vh - 30px); /* Account for main padding */
+  height: 100%;
+  min-width: 0;
 }
 
 /* Header container for title and navbar side by side */
@@ -181,11 +179,11 @@ main {
   border-radius: 24px;
   padding: 12px 25px;
   margin-bottom: 15px;
-  background: rgba(255, 255, 255, 0);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   transition: box-shadow 0.3s ease;
   width: 100%;
   box-sizing: border-box;
@@ -288,69 +286,75 @@ main {
 
 /* Mobile layout with bottom navigation */
 @media (max-width: 767px) {
-  body {
-    overflow: auto;
+  html, body {
+    height: auto;
+    overflow: auto; /* Mobile scrolls naturally */
   }
-  
+
   main {
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px; /* Space for fixed bottom navbar */
-    overflow: auto;
-    max-height: none;
+    height: auto;
     min-height: 100vh;
-    padding-left: 15px;
-    padding-right: 15px;
+    overflow: visible;
+    padding: 10px 15px 80px; /* bottom pad for fixed bottom nav */
   }
-  
+
   .sidebar-wrapper {
     height: auto;
-    max-height: none;
-    overflow-y: visible;
+    overflow: visible;
     width: 100%;
   }
-  
+
   .sidebar {
     height: auto;
     max-height: 130px;
   }
-  
+
+  .main-content {
+    height: auto;
+    overflow: visible;
+    flex: none;
+  }
+
+  .articles-container {
+    overflow: visible;
+    height: auto;
+    flex: none;
+  }
+
   .header-container {
     position: fixed;
     bottom: -1px;
     left: 10px;
     right: 10px;
     top: auto;
-    height:59px;
+    height: 59px;
     padding: 12px 15px;
     border-radius: 20px;
     margin: 0;
     z-index: 100;
     width: auto;
-    background: rgba(14, 28, 43, 1%);
+    background: rgba(14, 28, 43, 0.95);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
-  
-  .header-title {
-    display: none; /* Hide title on mobile */
-  }
-  
-  .navbar {
-    width: 100%;
-  }
-  
+
+  .header-title { display: none; }
+
+  .navbar { width: 100%; }
+
   .navbar-list {
     gap: 10px;
     justify-content: center;
     flex-wrap: nowrap;
     width: 100%;
   }
-  
+
   .navbar-link {
     padding: 10px 15px;
     font-size: 14px;
@@ -358,57 +362,25 @@ main {
     font-weight: 600;
     background: rgba(255, 255, 255, 0.15);
   }
-  
+
   .navbar-link.active {
-    background: rgba(64, 112, 244, 0.5);
+    background: rgba(64, 112, 244, 0.4);
     box-shadow: 0 4px 15px rgba(64, 112, 244, 0.3);
     transform: translateY(-2px);
   }
-  
-  .navbar-link.active {
-    background: rgba(64, 112, 244, 0.3);
-    box-shadow: 0 4px 15px rgba(64, 112, 244, 0.3);
-    transform: translateY(-2px);
-  }
-  
-  /* Better content spacing on mobile */
-  article[data-page] {
-    padding: 15px;
-  }
-  
-  /* Better sidebar layout on small screens */
+
+  article[data-page] { padding: 15px; }
+
   .sidebar-info {
     flex-direction: row;
     text-align: left;
     align-items: center;
     gap: 15px;
   }
-  
-  .avatar-box {
-    margin: 0;
-    width: 65px;
-    height: 65px;
-  }
-  
-  .info-content .name {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-  }
-  
-  .info-content .title {
-    font-size: 1rem;
-  }
-  
-  .main-content {
-    margin-bottom: 0;
-    overflow: visible;
-    max-height: none;
-  }
-  
-  .articles-container {
-    overflow: visible;
-    height: auto;
-  }
+
+  .avatar-box { margin: 0; width: 65px; height: 65px; }
+  .info-content .name { font-size: 1.5rem; margin-bottom: 5px; }
+  .info-content .title { font-size: 1rem; }
 }
 
 .header-container.scrolled {
@@ -416,62 +388,46 @@ main {
   background: rgba(255, 255, 255, 3%);
 }
 
-/* Scrollable articles container */
+/* Articles container — the ONLY scrolling pane */
 .articles-container {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0px;
+  padding: 0;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  background: transparent;
   width: 100%;
-  height: 100%;
   box-sizing: border-box;
-}
-
-/* iOS-style scrollbar for Chrome, Safari and Opera */
-.articles-container::-webkit-scrollbar {
-  width: 5px;
-}
-
-.articles-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-
-.articles-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-}
-
-.articles-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-/* iOS-style scrollbar for IE, Edge and Firefox */
-.articles-container {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
+  scrollbar-color: rgba(77,141,255,0.25) transparent;
 }
+
+.articles-container::-webkit-scrollbar { width: 4px; }
+.articles-container::-webkit-scrollbar-track { background: transparent; }
+.articles-container::-webkit-scrollbar-thumb { background: rgba(77,141,255,0.25); border-radius: 4px; }
 
 /* Responsive adjustments for tablets */
 @media (max-width: 1249px) and (min-width: 768px) {
-  body {
-    overflow: auto;
+  html, body {
+    height: 100%;
+    overflow: hidden;
   }
-  
+
   main {
     padding: 15px;
-    display: flex;
     flex-direction: column;
-    max-height: none;
-    overflow: auto;
-    height: auto;
+    height: 100vh;
+    overflow: hidden;
+    gap: 0;
   }
-  
+
+  .sidebar-wrapper {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
   .sidebar {
     position: relative;
     top: 0;
@@ -480,51 +436,56 @@ main {
     margin-bottom: 15px;
     border-radius: 20px;
     padding: 20px;
-    background: rgba(20, 40, 70, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
-  
+
   .main-content {
-    max-height: none;
-    width: 100%;
     flex: 1;
+    overflow: hidden;
+    min-height: 0;
   }
-  
-  /* Header container positioning for 1249px and below */
+
+  .articles-container {
+    overflow-y: auto;
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* Header container positioning */
   .header-container {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(20, 40, 60, 0.9);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     margin: 0;
     padding: 12px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 16px;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    flex-shrink: 0;
   }
-  
+
   .header-title {
     font-size: 20px;
     margin: 0;
     display: inline-block;
   }
-  
+
   .navbar {
     position: relative;
-    width:26rem;
+    width: 26rem;
   }
-  
-  .navbar-list {
-    gap: 10px;
-  }
-  
+
+  .navbar-list { gap: 10px; }
+
   .navbar-link {
     padding: 8px 16px;
     font-size: 15px;
@@ -532,70 +493,50 @@ main {
     border-radius: 12px;
     transition: all 0.3s ease;
   }
-  
+
   .navbar-link:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
   }
-  
+
   .navbar-link.active {
     background: rgba(64, 112, 244, 0.5);
     box-shadow: 0 4px 12px rgba(64, 112, 244, 0.25);
   }
-  
-  .articles-container {
-    background: rgba(20, 40, 70, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    overflow-y: auto;
-    height: auto;
-    min-height: 600px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
+
   .about-me {
     padding-top: 10px;
     color: rgba(255, 255, 255, 0.7);
     font-size: 16px;
     font-weight: 500;
   }
-  
+
   article[data-page] {
     background: transparent;
     box-shadow: none;
     border: none;
     padding: 0;
   }
-  
+
   article p {
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.9);
   }
-  
-  /* Better content flow for tablets and small laptops */
+
   .sidebar-info {
     gap: 15px;
     flex-direction: row;
     text-align: left;
     align-items: center;
   }
-  
+
   .avatar-box {
     margin: 0;
     width: 80px;
     height: 80px;
   }
-  
-  .info-content .name {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-  }
-  
-  .articles-container {
-    overflow: visible;
-  }
+
+  .info-content .name { font-size: 1.8rem; margin-bottom: 5px; }
 }
 
 /* General tablet and mobile styles */
@@ -625,9 +566,9 @@ main {
   /* Make article container look like the image */
   article[data-page] {
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
 

@@ -1,83 +1,63 @@
 /**
- * Enhance scrollable layout functionality
- * Manages scrolling behavior for the articles container
+ * scrollable-layout.js
+ * Manages header shadow on internal articles-container scroll,
+ * and updates the header title when switching pages.
  */
-document.addEventListener('DOMContentLoaded', function() {
-  // Elements
-  const headerContainer = document.querySelector('.header-container');
-  const headerTitle = document.querySelector('.header-title');
+document.addEventListener('DOMContentLoaded', function () {
+  const headerContainer   = document.querySelector('.header-container');
+  const headerTitle       = document.querySelector('.header-title');
   const articlesContainer = document.querySelector('.articles-container');
-  const navLinks = document.querySelectorAll('.navbar-link');
-  
-  if (!headerContainer || !articlesContainer || !navLinks.length || !headerTitle) {
-    return;
-  }
-  
-  // Add shadow to header when scrolling
-  articlesContainer.addEventListener('scroll', function() {
-    if (articlesContainer.scrollTop > 10) {
+  const navLinks          = document.querySelectorAll('.navbar-link');
+
+  if (!headerContainer || !articlesContainer || !navLinks.length) return;
+
+  // Page title map
+  const pageTitles = {
+    about:     'About Me',
+    resume:    'Resume',
+    portfolio: 'Portfolio',
+    blog:      'Blog',
+    contact:   'Contact'
+  };
+
+  // Shadow on internal scroll (articles-container is the scroll pane on desktop)
+  articlesContainer.addEventListener('scroll', function () {
+    if (articlesContainer.scrollTop > 15) {
       headerContainer.classList.add('scrolled');
     } else {
       headerContainer.classList.remove('scrolled');
     }
-  });
-  
-  // Page titles mapping
-  const pageTitles = {
-    'about': 'About Me',
-    'resume': 'Resume',
-    'portfolio': 'Portfolio',
-    'blog': 'Blog',
-    'contact': 'Contact'
-  };
-  
-  // Update header title and smooth scroll to top when changing pages
+  }, { passive: true });
+
+  // Also listen on window for mobile (natural document scroll)
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 15) {
+      headerContainer.classList.add('scrolled');
+    } else {
+      headerContainer.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Update header title and reset scroll when changing pages
   navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      // Get the page name from the active link
-      const pageName = this.textContent.toLowerCase();
-      
-      // Update the header title
-      if (pageTitles[pageName]) {
+    link.addEventListener('click', function () {
+      const pageName = this.textContent.trim().toLowerCase();
+      if (headerTitle && pageTitles[pageName]) {
         headerTitle.textContent = pageTitles[pageName];
       }
-      
-      // Reset scroll position when changing pages
+      // Scroll the internal pane back to top
       setTimeout(() => {
-        articlesContainer.scrollTop = 0;
+        articlesContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'instant' });
         headerContainer.classList.remove('scrolled');
-      }, 100);
+      }, 50);
     });
   });
-  
-  // Handle window resize events
-  window.addEventListener('resize', adjustLayout);
-  
-  // Initial layout adjustment
-  adjustLayout();
-  
-  // Initialize header title based on active page
-  function setInitialHeaderTitle() {
-    const activeLink = document.querySelector('.navbar-link.active');
-    if (activeLink) {
-      const pageName = activeLink.textContent.toLowerCase();
-      if (pageTitles[pageName]) {
-        headerTitle.textContent = pageTitles[pageName];
-      }
-    }
-  }
-  
-  // Set initial header title
-  setInitialHeaderTitle();
-  
-  function adjustLayout() {
-    // Adjust layout based on screen size
-    if (window.innerWidth < 992) {
-      // Mobile: disable special scrolling
-      articlesContainer.style.overflow = 'visible';
-    } else {
-      // Desktop: ensure content is scrollable
-      articlesContainer.style.overflowY = 'auto';
-    }
+
+  // Set header title from active link on load
+  const activeLink = document.querySelector('.navbar-link.active');
+  if (activeLink && headerTitle) {
+    const pageName = activeLink.textContent.trim().toLowerCase();
+    if (pageTitles[pageName]) headerTitle.textContent = pageTitles[pageName];
   }
 });

@@ -1,0 +1,168 @@
+/*============================================================*\
+  #CURSOR.CSS
+  Premium dual-layer cursor:
+    · .cursor-dot   — tiny 8px precise dot
+    · .cursor-ring  — 40px lagging outer ring
+  States: default → hover (scale + color) → click (burst)
+  Hidden on touch/mobile automatically.
+\*============================================================*/
+
+/* ─── Hide native cursor on desktop ─────────────────────── */
+@media (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
+
+/* ─── Cursor layers ──────────────────────────────────────── */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  /* Centre on the coordinate — JS sets left/top */
+  transform: translate(-50%, -50%);
+  will-change: left, top, opacity, width, height;
+  /* Visible by default; JS adds is-hidden initially */
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* ─── Dot — sharp, instant tracking ─────────────────────── */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  box-shadow:
+    0 0 6px rgba(77, 141, 255, 0.9),
+    0 0 12px rgba(77, 141, 255, 0.5);
+  transition:
+    width  0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background  0.2s ease,
+    box-shadow  0.2s ease,
+    opacity     0.3s ease;
+}
+
+/* ─── Ring — lagging outer halo ─────────────────────────── */
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1.5px solid rgba(77, 141, 255, 0.55);
+  box-shadow:
+    0 0 10px rgba(77, 141, 255, 0.15),
+    inset 0 0 10px rgba(77, 141, 255, 0.04);
+  transition:
+    width        0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    height       0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    background   0.3s ease,
+    box-shadow   0.3s ease,
+    opacity      0.3s ease;
+}
+
+/* ─── Hidden state ───────────────────────────────────────── */
+.cursor-dot.is-hidden,
+.cursor-ring.is-hidden {
+  opacity: 0 !important;
+}
+
+/* ─── Hover state — interactive elements ─────────────────── */
+.cursor-dot.is-hovering {
+  width: 6px;
+  height: 6px;
+  background: #4d8dff;
+  box-shadow:
+    0 0 8px rgba(77, 141, 255, 1),
+    0 0 20px rgba(77, 141, 255, 0.6);
+}
+
+.cursor-ring.is-hovering {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(77, 141, 255, 0.8);
+  background: rgba(77, 141, 255, 0.04);
+  box-shadow:
+    0 0 20px rgba(77, 141, 255, 0.25),
+    inset 0 0 16px rgba(77, 141, 255, 0.06);
+}
+
+/* ─── Click burst state ──────────────────────────────────── */
+.cursor-dot.is-clicking {
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+}
+
+.cursor-ring.is-clicking {
+  width: 64px;
+  height: 64px;
+  border-color: rgba(128, 87, 255, 0.9);
+  background: rgba(128, 87, 255, 0.06);
+  box-shadow:
+    0 0 28px rgba(128, 87, 255, 0.35),
+    inset 0 0 20px rgba(128, 87, 255, 0.08);
+  transition:
+    width        0.12s cubic-bezier(0.22, 1, 0.36, 1),
+    height       0.12s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.12s ease,
+    background   0.12s ease,
+    box-shadow   0.12s ease,
+    opacity      0.3s ease;
+}
+
+/* ─── Text / input state — thin caret ───────────────────── */
+.cursor-dot.is-text {
+  width: 2px;
+  height: 22px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: none;
+}
+
+.cursor-ring.is-text {
+  opacity: 0;
+}
+
+/* ─── Spark particle burst on click ─────────────────────── */
+.cursor-spark {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  border-radius: 50%;
+  /* JS sets left/top to click coords; transform shifts out */
+  transform: translate(-50%, -50%);
+  animation: sparkBurst 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes sparkBurst {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) translate(0px, 0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--tx, 0px), var(--ty, 0px)) scale(0.15);
+  }
+}
+
+/* ─── Disable on touch / reduce motion ──────────────────── */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}

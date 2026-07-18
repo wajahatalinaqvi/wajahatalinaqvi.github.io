@@ -1,0 +1,417 @@
+/*============================================================*\
+  #LIQUID-GLASS-SYSTEM.CSS
+  Modern dark glassmorphism system inspired by Apple interfaces.
+  Uses a double glass hierarchy (clear & tinted) with specular
+  refractions, pointer spotlights, and scrolling support.
+\*============================================================*/
+
+:root {
+  /* ─── Glass design tokens ───────────────────────────────── */
+  --page-background:     #050b18;
+  --glass-clear:         rgba(17, 30, 52, 0.58);
+  --glass-tinted:        rgba(10, 21, 38, 0.82); /* slightly darker for text readability */
+  --glass-tinted-hover:  rgba(14, 28, 50, 0.86);
+  --glass-border:        rgba(158, 187, 255, 0.13);
+  --glass-border-active: rgba(82, 145, 255, 0.38);
+  --glass-highlight:     rgba(255, 255, 255, 0.08);
+  --glass-shadow:        rgba(0, 0, 0, 0.28);
+}
+
+/* ─── Clear Glass (Top Nav, Chips, Small Controls) ──────── */
+.header-container,
+.navbar-link,
+.capability-chip,
+.tech-badge,
+.skills-item,
+.copy-feedback-bubble {
+  background: var(--glass-clear);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 16px var(--glass-shadow);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ─── Tinted Glass (Sidebar, Content Cards, Contact Form) ── */
+.sidebar,
+.service-item,
+.timeline-item,
+.project-item > a,
+.contact-form,
+.testimonials-modal {
+  background: var(--glass-tinted);
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 12px 40px var(--glass-shadow), 
+    inset 0 1px 0 var(--glass-highlight);
+  position: relative;
+  overflow: hidden;
+  transition: 
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), 
+    border-color 0.35s ease, 
+    background-color 0.35s ease, 
+    box-shadow 0.35s ease;
+}
+
+/* Content layer protection inside cards to ensure contrast */
+.sidebar > *,
+.service-item > *,
+.timeline-item > *,
+.project-item > a > *,
+.contact-form > *,
+.testimonials-modal > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Specular Light Reflection Layer (Top-Left Highlight) ─ */
+.sidebar::after,
+.service-item::after,
+.timeline-item::after,
+.project-item > a::after,
+.contact-form::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 45%);
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sidebar:hover::after,
+.service-item:hover::after,
+.timeline-item:hover::after,
+.project-item > a:hover::after,
+.contact-form:hover::after {
+  transform: scale(1.02) translate(1px, 1px);
+}
+
+/* ─── Pointer Spotlight Highlight (Clipped Inside Card) ─── */
+.sidebar.spotlit::before,
+.service-item.spotlit::before,
+.timeline-item.spotlit::before,
+.project-item > a.spotlit::before,
+.contact-form.spotlit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(77, 141, 255, 0.06),
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+/* ─── Navigation Header Specifics ───────────────────────── */
+.header-container {
+  border-radius: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16); /* thin illuminated upper border */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.32);
+}
+
+/* Page Navigation Indicator Line */
+.nav-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue, #4d8dff), var(--accent-purple, #8057ff));
+  z-index: 6;
+  border-radius: 0 0 0 18px;
+  transition: width 0.1s linear, opacity 0.25s ease;
+}
+
+/* Sliding active tab indicator */
+.nav-indicator {
+  position: absolute;
+  bottom: 6px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue, #4d8dff), var(--accent-purple, #8057ff));
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Navigation button glass capsules */
+.navbar-link {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm, 8px);
+  padding: 8px 14px;
+}
+
+.navbar-link:hover,
+.navbar-link:focus {
+  background: rgba(77, 141, 255, 0.08);
+  border-color: rgba(77, 141, 255, 0.28);
+}
+
+.navbar-link.active {
+  background: rgba(77, 141, 255, 0.12);
+  border-color: var(--glass-border-active);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--text-primary, #f5f7ff);
+}
+
+/* ─── Profile Sidebar Specifics ─────────────────────────── */
+.sidebar {
+  border-radius: 24px;
+  background: rgba(10, 21, 38, 0.88); /* more opaque because it contains bio */
+}
+
+/* Availability Badge */
+.availability-badge {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: rgba(9, 20, 38, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.availability-badge .pulse-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #10b981;
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+}
+
+.availability-badge .pulse-dot::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #10b981;
+  border-radius: 50%;
+  animation: badgePulse 1.8s ease-out infinite;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.availability-badge .badge-text {
+  font-size: 9px;
+  font-weight: 600;
+  color: #a7f3d0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Email Copy feedback bubble */
+.copy-feedback-bubble {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-primary, #f5f7ff);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: var(--glass-clear);
+  border: 1px solid var(--glass-border-active);
+}
+
+.copy-feedback-bubble.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Capability Chips & Small Tiles ───────────────────── */
+.capability-chip {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: var(--accent-blue, #4d8dff);
+  background: rgba(77, 141, 255, 0.08);
+  border: 1px solid rgba(77, 141, 255, 0.16);
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+
+.capability-chip:hover {
+  background: rgba(77, 141, 255, 0.15);
+  border-color: rgba(77, 141, 255, 0.32);
+  transform: translateY(-1px);
+}
+
+/* Technology stacked icons alignment and white box removal */
+.skills-item {
+  background: rgba(13, 27, 49, 0.5);
+  border-radius: 14px;
+}
+
+.skills-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 4px;
+  background-color: transparent !important;
+  mix-blend-mode: normal;
+}
+
+/* ─── Contact Form Elements ─────────────────────────────── */
+@keyframes calmGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.contact-form {
+  background: linear-gradient(135deg, rgba(10, 21, 38, 0.82) 0%, rgba(18, 33, 58, 0.88) 50%, rgba(10, 21, 38, 0.82) 100%) !important;
+  background-size: 200% 200% !important;
+  animation: calmGradient 10s ease infinite;
+}
+
+.form-input {
+  background: rgba(5, 11, 24, 0.35) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text-primary, #f5f7ff) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.form-input:focus {
+  border-color: var(--glass-border-active) !important;
+  background-color: rgba(77, 141, 255, 0.05) !important;
+  box-shadow: 0 0 10px rgba(77, 141, 255, 0.16) !important;
+  outline: none;
+}
+
+.form-input:focus:invalid {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.15) !important;
+}
+
+.form-input:focus:valid {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* ─── Ambient radial gradients background ───────────────── */
+body::after {
+  content: "";
+  position: fixed;
+  top: 15%; left: 10%;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(77, 141, 255, 0.06) 0%, transparent 70%);
+  z-index: -3;
+  pointer-events: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  bottom: 15%; right: 10%;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(128, 87, 255, 0.05) 0%, transparent 70%);
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* ─── Double Refraction and Border Highlights hover ─────── */
+.sidebar:hover,
+.service-item:hover,
+.timeline-item:hover,
+.project-item > a:hover,
+.contact-form:hover {
+  border-color: var(--glass-border-active);
+  background-color: var(--glass-tinted-hover);
+  box-shadow: 
+    0 16px 48px var(--glass-shadow), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 12px rgba(77, 141, 255, 0.08);
+  transform: translateY(-3px);
+}
+
+/* ─── Browser Compatibility & Fallback ──────────────────── */
+@supports not (backdrop-filter: blur(1px)) {
+  .header-container,
+  .navbar-link,
+  .sidebar,
+  .service-item,
+  .timeline-item,
+  .project-item > a,
+  .contact-form {
+    background-color: #0b1526 !important; /* solid fallback */
+  }
+}
+
+/* Accessibility high-contrast mode or reduced transparency */
+@media (prefers-contrast: more) {
+  :root {
+    --glass-clear: rgba(10, 21, 38, 0.94);
+    --glass-tinted: #0a1526;
+    --glass-border: rgba(255, 255, 255, 0.45);
+  }
+}
+
+/* ─── Responsive Adjustments ────────────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --glass-clear: rgba(14, 25, 44, 0.72);
+    --glass-tinted: rgba(10, 21, 38, 0.90);
+  }
+  .sidebar,
+  .service-item,
+  .timeline-item,
+  .project-item > a,
+  .contact-form {
+    backdrop-filter: blur(12px) saturate(110%);
+    -webkit-backdrop-filter: blur(12px) saturate(110%);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --glass-clear: #0d1a2d;
+    --glass-tinted: #0a1526;
+  }
+  .sidebar,
+  .service-item,
+  .timeline-item,
+  .project-item > a,
+  .contact-form {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform: none !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+  }
+  .sidebar::after,
+  .service-item::after,
+  .timeline-item::after,
+  .project-item > a::after,
+  .contact-form::after {
+    display: none;
+  }
+}
