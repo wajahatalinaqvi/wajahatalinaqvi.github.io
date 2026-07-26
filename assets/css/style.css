@@ -474,7 +474,7 @@ main {
 
 .sidebar {
   margin-bottom: 0;
-  max-height: 95px; /* Reduced height in collapsed state */
+  max-height: 88px; /* Collapsed height — matches mobile.css (12+60+12+border = ~86px) */
   overflow: hidden;
   transition: var(--transition-2);
 }
@@ -570,17 +570,17 @@ main {
 }
 
 .info_more-btn {
-  position: absolute;
-  top: -2rem;
-    right: -4vw;
-  border-radius: 0 12px;
+  position: static;
+  border-radius: 10px;
   font-size: 12px;
   color: var(--orange-yellow-crayola);
   background: var(--border-gradient-onyx);
-  padding: 8px;
+  padding: 8px 10px;
   box-shadow: var(--shadow-2);
   transition: var(--transition-1);
   z-index: 1;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .info_more-btn::before {
@@ -1810,13 +1810,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .blog-banner-box { height: auto; }
 
 }
-@media (max-width: 412px) {
-
-  .info_more-btn{
-        top: -2rem;
-    right: -1rem;
-  }
-}
+/* 412px breakpoint - info_more-btn is now position:static, no override needed */
 
 @media (max-width: 450px) {
   /* .avatar-box img{
@@ -1898,32 +1892,25 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .sidebar {
-    max-height: 130px;
+    max-height: 88px;
     margin-bottom: 30px;
   }
 
-  .sidebar.active { max-height: 584px; }
+  .sidebar.active { max-height: 900px; }
 
   .sidebar-info { gap: 25px; }
 
-  .avatar-box { border-radius: 30px;
-    border-radius: 9999999px;
+  .avatar-box { border-radius: 9999999px;
   border: 1px solid #2c2c2c;   
   overflow: hidden;     
    box-shadow: 2px 4px black; }
 
-  .avatar-box img { width: 79px;
-  /* filter: grayscale(1); */
-  }
-
-  .info-content .name { margin-bottom: 15px; }
+  .avatar-box img { width: 79px; }
 
   .info-content .title { padding: 5px 18px; }
 
   .info_more-btn {
-    top: -2.6rem;
-    right: -1.3rem;
-    padding: 10px 15px;
+    padding: 8px 12px;
   }
 
   .info_more-btn span {

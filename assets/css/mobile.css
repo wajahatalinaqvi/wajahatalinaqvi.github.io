@@ -1,0 +1,831 @@
+/*-----------------------------------*\
+  #MOBILE.CSS — Full Responsive Overrides
+  Breakpoints:
+    ≤ 767px  → Mobile (phones)
+    480px    → Small phones
+    360px    → Extra-small
+    768–1024 → Tablet
+\*-----------------------------------*/
+
+/* ── Touch Device: disable custom cursor & hover tilt ── */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot,
+  .cursor-outline { display: none !important; }
+
+  * { cursor: auto !important; }
+
+  .project-item:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .navbar-link:hover,
+  .timeline-item:hover,
+  .project-item > a:hover {
+    transform: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════
+   MOBILE (≤ 767px)
+═══════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── Page Shell ─────────────────── */
+  html, body {
+    height: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  main {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+    padding: 12px 12px 80px !important;
+    gap: 12px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* ── Sidebar ─────────────────────── */
+  .sidebar-wrapper {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    min-width: unset !important;
+  }
+
+  .sidebar {
+    height: auto !important;
+    max-height: 88px !important;
+    overflow: hidden !important;
+    padding: 12px 16px !important;
+    border-radius: 20px !important;
+    transition: max-height 0.4s ease !important;
+    margin-bottom: 0 !important;
+  }
+
+  .sidebar.active {
+    max-height: 900px !important;
+    overflow: visible !important;
+  }
+
+  .sidebar-info {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .avatar-box {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .avatar-box img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover !important;
+  }
+
+  .info-content {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .info-content .name {
+    font-size: 1.05rem !important;
+    margin-bottom: 2px !important; /* Keep tight in collapsed sidebar */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .info-content .title {
+    font-size: 0.72rem !important;
+    width: auto !important;
+    padding: 3px 10px !important;
+  }
+
+  /* Scale down the availability badge for small avatar */
+  .availability-badge {
+    padding: 2px 5px !important;
+    border-radius: 8px !important;
+    gap: 3px !important;
+    bottom: -2px !important;
+    right: -2px !important;
+  }
+
+  .availability-badge .badge-text {
+    font-size: 7px !important;
+    letter-spacing: 0 !important;
+  }
+
+  .availability-badge .pulse-dot {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  /* Fix the "Contacts" toggle button — inline in the flex row */
+  .info_more-btn {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    min-width: fit-content !important;
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    border-radius: 8px !important;
+    align-self: center !important;
+  }
+
+  .info_more-btn span { display: block !important; font-size: 11px !important; }
+  .info_more-btn ion-icon { display: none !important; }
+
+  .sidebar-info_more {
+    margin-top: 14px !important;
+    padding-top: 10px !important;
+  }
+
+  .contacts-list {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .contact-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .contact-item .icon-box {
+    min-width: 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 13px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .contact-info {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .contact-info p,
+  .contact-info address,
+  .contact-info time,
+  .contact-info a {
+    font-size: 11px !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .separator { margin: 10px 0 !important; }
+
+  .social-list {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+    margin-bottom: 12px !important;
+  }
+
+  .social-link {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+  }
+
+  .cv-download-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px !important;
+    font-size: 13px !important;
+    border-radius: 12px !important;
+  }
+
+  /* ── Main Content ────────────────── */
+  .main-content {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    flex: none !important;
+    max-height: none !important;
+  }
+
+  .articles-container {
+    overflow: visible !important;
+    height: auto !important;
+    flex: none !important;
+    padding: 0 !important;
+  }
+
+  /* ── Header / Nav Bar ───────────── */
+  .header-container {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    height: 60px !important;
+    padding: 10px 16px !important;
+    border-radius: 22px 22px 0 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    margin: 0 !important;
+    z-index: 100 !important;
+    width: 100% !important;
+    background: rgba(5, 11, 24, 0.97) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-bottom: none !important;
+  }
+
+  .header-title { display: none !important; }
+
+  .navbar {
+    width: 100% !important;
+    padding: 0 !important;
+    position: static !important;
+    bottom: auto !important;
+    left: auto !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .navbar-list {
+    gap: 4px !important;
+    justify-content: space-evenly !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .navbar-link {
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    white-space: nowrap !important;
+  }
+
+  .navbar-link.active {
+    background: rgba(77, 141, 255, 0.3) !important;
+    box-shadow: 0 3px 12px rgba(77, 141, 255, 0.3) !important;
+    transform: none !important;
+  }
+
+  .nav-indicator { display: none !important; }
+
+  /* ── Article Pages ──────────────── */
+  article[data-page] {
+    padding: 18px 16px !important;
+    border-radius: 20px !important;
+    background: rgba(10, 21, 38, 0.82) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(158, 187, 255, 0.13) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* ── About Section ──────────────── */
+  .about-text {
+    max-width: 100% !important;
+    font-size: 14px !important;
+  }
+
+  .about-text p {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  .about-intro-heading {
+    font-size: 16px !important;
+  }
+
+  /* ── Capability chips ───────────── */
+  .capability-chips {
+    gap: 6px !important;
+  }
+
+  .capability-chip {
+    white-space: normal !important;
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+    word-break: break-word !important;
+  }
+
+  /* ── Service section ────────────── */
+  .service-list {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .service-item {
+    padding: 16px !important;
+    border-radius: 14px !important;
+    display: block !important; /* Reset the flex from 580px breakpoint */
+  }
+
+  .service-icon-box {
+    margin: 0 auto 12px !important;
+  }
+
+  .service-content-box {
+    text-align: center !important;
+  }
+
+  /* ── Resume Timeline ────────────── */
+  .timeline-list {
+    margin-left: 30px !important;
+  }
+
+  .timeline-list::before {
+    left: -20px !important;
+  }
+
+  .timeline-item {
+    padding: 14px !important;
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .timeline-item::after {
+    left: -24px !important;
+    width: 8px !important;
+    height: 8px !important;
+    top: 8px !important;
+  }
+
+  .timeline-item-title { font-size: 13px !important; }
+
+  .timeline-text {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ── Portfolio Grid ─────────────── */
+  .filter-select-box { margin-bottom: 14px !important; }
+
+  .project-list {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .project-item > a {
+    padding: 10px 10px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .project-img {
+    height: 175px !important;
+    border-radius: 12px !important;
+  }
+
+  .project-title { font-size: 14px !important; }
+  .project-category { font-size: 11px !important; }
+
+  .tech-badge {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    white-space: nowrap !important;
+  }
+
+  .tech-badges {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    margin-top: 6px !important;
+  }
+
+  /* ── Contact Form ───────────────── */
+  .mapbox {
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
+    height: 180px !important;
+  }
+
+  .mapbox figure iframe {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  .contact-form {
+    padding: 16px !important;
+    border-radius: 16px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .input-wrapper {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .form-input {
+    font-size: 14px !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+
+  textarea.form-input {
+    min-height: 110px !important;
+    height: 110px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .form-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+  }
+
+  /* ── Title wrapper ──────────────── */
+  .title-wrapper { margin-bottom: 18px !important; }
+
+  .h3.article-title { font-size: 16px !important; }
+
+  /* ── Footer ─────────────────────── */
+  .portfolio-footer {
+    padding: 14px !important;
+    font-size: 12px !important;
+    border-radius: 14px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* ── Marquee Skills ─────────────── */
+  .marquee {
+    height: 130px !important;
+  }
+
+  .skills-item {
+    padding: 10px 12px !important;
+    min-width: 76px !important;
+  }
+
+  .skills-item img,
+  .skills-icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .skills-name {
+    font-size: 9px !important;
+    margin-top: 5px !important;
+  }
+
+  /* ── Modal ──────────────────────── */
+  .testimonials-modal {
+    margin: 15px 10px !important;
+    padding: 16px !important;
+    display: block !important;
+  }
+
+  /* ── Form feedback ──────────────── */
+  .form-feedback {
+    margin-top: 10px !important;
+    font-size: 13px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════
+   SMALL PHONES (≤ 480px)
+═══════════════════════════════════ */
+@media (max-width: 480px) {
+
+  main {
+    padding: 10px 10px 72px !important;
+    gap: 10px !important;
+  }
+
+  .sidebar {
+    padding: 12px 14px !important;
+    border-radius: 18px !important;
+  }
+
+  .avatar-box {
+    width: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
+  }
+
+  .avatar-box img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .info-content .name { font-size: 1rem !important; }
+  .info-content .title { font-size: 0.72rem !important; }
+
+  .navbar-list { gap: 2px !important; }
+
+  .navbar-link {
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+    border-radius: 9px !important;
+  }
+
+  article[data-page] {
+    padding: 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .project-img { height: 160px !important; }
+
+  .timeline-item { padding: 12px !important; }
+  .timeline-list { margin-left: 24px !important; }
+  .timeline-list::before { left: -16px !important; }
+  .timeline-item::after { left: -19px !important; }
+
+  .contacts-list { grid-template-columns: 1fr !important; }
+
+  h3, .h3 { font-size: 15px !important; }
+  h4, .h4 { font-size: 13px !important; }
+
+  .tech-badges { gap: 3px !important; margin-top: 5px !important; }
+
+  .about-intro-heading { font-size: 14px !important; }
+
+  .capability-chip {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+  }
+
+  .service-item {
+    padding: 14px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════
+   EXTRA SMALL (≤ 360px)
+═══════════════════════════════════ */
+@media (max-width: 360px) {
+
+  main { padding: 8px 8px 66px !important; }
+
+  .avatar-box {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+  }
+
+  .avatar-box img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .info-content .name { font-size: 0.9rem !important; }
+  .info-content .title { font-size: 0.65rem !important; }
+
+  .navbar-link {
+    padding: 5px 7px !important;
+    font-size: 10px !important;
+  }
+
+  .project-img { height: 145px !important; }
+  .timeline-item { padding: 10px !important; }
+  .form-input { padding: 10px 12px !important; font-size: 13px !important; }
+
+  .skills-item { min-width: 68px !important; }
+  .skills-item img, .skills-icon { width: 36px !important; height: 36px !important; }
+}
+
+
+/* ═══════════════════════════════════
+   TABLET (768px – 1024px)
+═══════════════════════════════════ */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+
+  main {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+    padding: 16px 20px 90px !important;
+    gap: 16px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .sidebar-wrapper {
+    width: 100% !important;
+    height: auto !important;
+    min-width: unset !important;
+    border-right: none !important;
+  }
+
+  .sidebar {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 20px 24px !important;
+    border-radius: 22px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .sidebar.active {
+    max-height: none !important;
+  }
+
+  .sidebar-info {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 18px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .avatar-box {
+    width: 72px !important;
+    height: 72px !important;
+    min-width: 72px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .info-content .name { font-size: 1.5rem !important; }
+  .info-content .title { font-size: 0.9rem !important; }
+
+  /* Hide toggle button — show all contacts on tablet */
+  .info_more-btn { display: none !important; }
+
+  .sidebar-info_more {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .main-content {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  .articles-container {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Fixed bottom nav */
+  .header-container {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    height: 66px !important;
+    padding: 12px 32px !important;
+    border-radius: 24px 24px 0 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    margin: 0 !important;
+    z-index: 100 !important;
+    width: 100% !important;
+    background: rgba(5, 11, 24, 0.97) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: none !important;
+  }
+
+  .header-title { display: none !important; }
+
+  .navbar {
+    width: 100% !important;
+    padding: 0 !important;
+    position: static !important;
+    bottom: auto !important;
+    left: auto !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .navbar-list {
+    justify-content: space-evenly !important;
+    gap: 12px !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+    padding: 0 !important;
+  }
+
+  .navbar-link {
+    padding: 10px 22px !important;
+    font-size: 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .nav-indicator { display: none !important; }
+
+  /* 2-column project grid on tablet */
+  .project-list {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+    align-items: stretch !important;
+  }
+
+  .project-img { height: 190px !important; }
+
+  .input-wrapper {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .service-list {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .contacts-list {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Fix the info_more_btn position on tablet */
+  .about-text {
+    max-width: 100% !important;
+  }
+
+  article[data-page] {
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Capability chips wrap properly */
+  .capability-chip {
+    white-space: normal !important;
+  }
+
+  /* Footer above nav */
+  .portfolio-footer {
+    margin-bottom: 8px !important;
+  }
+}
+
+/* ═══════════════════════════════════
+   OVERRIDE: Fix 580px breakpoint conflicts
+   (style.css adds margin-top/bottom that break mobile layout)
+═══════════════════════════════════ */
+@media (min-width: 580px) and (max-width: 767px) {
+  main {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Reset the sidebar max-height from the 580px breakpoint in style.css */
+  .sidebar {
+    max-height: 100px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .sidebar.active {
+    max-height: 900px !important;
+  }
+
+  /* Sidebar articles should match mobile on this range */
+  .sidebar, article {
+    width: 100% !important;
+    padding: 14px !important;
+  }
+
+  /* Reset info_more_btn from 580px style.css */
+  .info_more-btn {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .info_more-btn ion-icon { display: none !important; }
+  .info_more-btn span { display: block !important; font-size: 12px !important; }
+
+  /* Reset avatar from 580px */
+  .avatar-box img {
+    width: 60px !important;
+  }
+}

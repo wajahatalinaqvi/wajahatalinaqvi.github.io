@@ -308,7 +308,9 @@ main {
 
   .sidebar {
     height: auto;
-    max-height: 130px;
+    max-height: 88px;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
   }
 
   .main-content {
@@ -321,27 +323,29 @@ main {
     overflow: visible;
     height: auto;
     flex: none;
+    padding: 0;
   }
 
   .header-container {
     position: fixed;
     bottom: -1px;
-    left: 10px;
-    right: 10px;
+    left: 0;
+    right: 0;
     top: auto;
-    height: 59px;
-    padding: 12px 15px;
-    border-radius: 20px;
-    margin: 0;
-    z-index: 100;
-    width: auto;
-    background: rgba(14, 28, 43, 0.95);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    height: 60px;
+    padding: 10px 16px;
+    border-radius: 22px 22px 0 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    margin: 0;
+    z-index: 100;
+    width: 100%;
+    background: rgba(5, 11, 24, 0.97);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: none;
   }
 
   .header-title { display: none; }
@@ -349,24 +353,24 @@ main {
   .navbar { width: 100%; }
 
   .navbar-list {
-    gap: 10px;
-    justify-content: center;
+    gap: 4px;
+    justify-content: space-evenly;
     flex-wrap: nowrap;
     width: 100%;
   }
 
   .navbar-link {
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 12px;
+    padding: 7px 10px;
+    font-size: 12px;
+    border-radius: 10px;
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .navbar-link.active {
-    background: rgba(64, 112, 244, 0.4);
-    box-shadow: 0 4px 15px rgba(64, 112, 244, 0.3);
-    transform: translateY(-2px);
+    background: rgba(77, 141, 255, 0.3);
+    box-shadow: 0 3px 12px rgba(77, 141, 255, 0.3);
+    transform: none;
   }
 
   article[data-page] { padding: 15px; }
@@ -375,12 +379,12 @@ main {
     flex-direction: row;
     text-align: left;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
   }
 
-  .avatar-box { margin: 0; width: 65px; height: 65px; }
-  .info-content .name { font-size: 1.5rem; margin-bottom: 5px; }
-  .info-content .title { font-size: 1rem; }
+  .avatar-box { margin: 0; width: 60px; height: 60px; min-width: 60px; }
+  .info-content .name { font-size: 1.1rem; margin-bottom: 4px; }
+  .info-content .title { font-size: 0.75rem; }
 }
 
 .header-container.scrolled {
