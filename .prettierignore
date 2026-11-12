@@ -1,0 +1,7 @@
+node_modules
+.next
+out
+test-results
+assets
+index.html
+package-lock.json
