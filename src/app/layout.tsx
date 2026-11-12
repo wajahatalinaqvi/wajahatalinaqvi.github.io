@@ -15,37 +15,57 @@ import { CommandPalette } from "@/components/interactive/CommandPalette";
 export const metadata: Metadata = {
   metadataBase: new URL(profile.url),
   title: {
-    default: "Wajahat Naqvi — Full-Stack Developer",
+    default: "Wajahat Naqvi | Shopify Full-Stack Developer",
     template: "%s — Wajahat Naqvi",
   },
   description:
-    "Wajahat Naqvi is a Full-Stack Developer in Lahore building thoughtful web applications with React, Laravel, APIs, and a specialization in Shopify commerce.",
+    "Wajahat Naqvi is a Shopify full-stack developer in Lahore, Pakistan, specializing in Shopify apps, Liquid, React, Next.js, Laravel, GraphQL, APIs, ecommerce automation, and AI workflows.",
+  keywords: [
+    "Wajahat Naqvi",
+    "Shopify Developer",
+    "Shopify App Developer",
+    "Full-Stack Developer",
+    "React Developer",
+    "Next.js Developer",
+    "Laravel Developer",
+    "Shopify Liquid",
+    "GraphQL",
+    "Ecommerce Developer",
+    "Lahore Pakistan",
+  ],
+  authors: [
+    { name: "Wajahat Naqvi", url: "https://wajahatalinaqvi.github.io/" },
+  ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Wajahat Naqvi — Full-Stack Developer",
+    title: "Wajahat Naqvi | Shopify Full-Stack Developer",
     description:
-      "Building thoughtful digital products from interface to infrastructure.",
+      "Shopify app developer and full-stack engineer building with Liquid, React, Next.js, Laravel, GraphQL, APIs, ecommerce automation, and AI workflows.",
     url: "/",
     siteName: "Wajahat Naqvi",
-    type: "website",
+    type: "profile",
     locale: "en_US",
     images: [
       {
         url: "/images/social-card.png",
         width: 1200,
         height: 630,
-        alt: "Wajahat Naqvi — Full-Stack Developer",
+        alt: "Wajahat Naqvi | Shopify Full-Stack Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wajahat Naqvi — Full-Stack Developer",
+    title: "Wajahat Naqvi | Shopify Full-Stack Developer",
     description:
-      "Building thoughtful digital products from interface to infrastructure.",
+      "Shopify app developer and full-stack engineer in Lahore, Pakistan.",
     images: ["/images/social-card.png"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { "max-image-preview": "large" },
+  },
   icons: { icon: "/icon.svg" },
 };
 export const viewport: Viewport = {
@@ -60,7 +80,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: profile.name,
-    jobTitle: profile.role,
+    jobTitle: "Shopify Full-Stack Developer",
     url: profile.url,
     image: `${profile.url}/images/wajahat-naqvi.webp`,
     sameAs: [profile.github, profile.linkedin],
@@ -70,12 +90,15 @@ export default function RootLayout({
       addressCountry: "PK",
     },
     knowsAbout: [
+      "Shopify Development",
+      "Shopify Apps",
+      "Shopify Liquid",
       "React",
-      "JavaScript",
+      "Next.js",
       "Laravel",
-      "APIs",
-      "Shopify",
-      "Web development",
+      "GraphQL",
+      "Ecommerce Development",
+      "AI Workflows",
     ],
   };
   return (
