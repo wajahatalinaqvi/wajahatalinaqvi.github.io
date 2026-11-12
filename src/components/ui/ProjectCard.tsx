@@ -15,6 +15,7 @@ export function ProjectCard({
     <ProjectMotion tone={project.tone}>
       <Link
         className="project-image-link"
+        data-cursor="View case"
         href={`/projects/${project.slug}/`}
         aria-label={`View ${project.name} case study`}
       >

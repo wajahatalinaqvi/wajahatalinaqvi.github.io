@@ -44,6 +44,22 @@ export function ProjectMotion({
             { y: 16, opacity: 0, duration: 0.6, stagger: 0.07 },
             0.24,
           );
+        // The card frame opens from a narrow window to full bleed as it
+        // travels up the viewport.
+        gsap.fromTo(
+          ".project-image-link",
+          { clipPath: "inset(9% 7% 9% 7% round 18px)" },
+          {
+            clipPath: "inset(0% 0% 0% 0% round 8px)",
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: root.current,
+              start: "top bottom",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          },
+        );
         if (desktop) {
           gsap.fromTo(
             ".project-scroll",

@@ -24,14 +24,13 @@ const scrollTo = async (page, selector, viewportOffset = 200) =>
   page
     .locator(selector)
     .first()
-    .evaluate(
-      (element, offset) =>
-        window.scrollTo({
-          top: element.getBoundingClientRect().top + window.scrollY - offset,
-          behavior: "instant",
-        }),
-      viewportOffset,
-    );
+    .evaluate((element, offset) => {
+      const top = element.getBoundingClientRect().top + window.scrollY - offset;
+      // Desktop fine-pointer pages scroll through Lenis; jump it directly so
+      // an in-flight inertial scroll cannot carry the page past the target.
+      if (window.__lenis) window.__lenis.scrollTo(top, { immediate: true });
+      else window.scrollTo({ top, behavior: "instant" });
+    }, viewportOffset);
 const noOverflow = async (page) =>
   assert.equal(
     await page.evaluate(
@@ -62,7 +61,7 @@ try {
         const element = mutation.target;
         if (!(element instanceof Element)) continue;
         if (
-          element.matches(".hero-line") &&
+          element.matches(".hero-line, .hero-char") &&
           Math.abs(new DOMMatrix(getComputedStyle(element).transform).m42) > 2
         )
           window.__motionEvidence.heroMoved = true;
@@ -119,7 +118,11 @@ try {
   report.interactions.push(
     "Architecture panels respond to hover and keyboard focus",
   );
-  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await page.evaluate(() =>
+    window.__lenis
+      ? window.__lenis.scrollTo(0, { immediate: true })
+      : scrollTo({ top: 0, behavior: "instant" }),
+  );
   await expect.poll(() => matrix(page, ".architecture-scroll", "m11")).toBe(1);
   const initialScale = await matrix(page, ".architecture-scroll", "m11");
   await page.mouse.wheel(0, 430);
@@ -284,13 +287,18 @@ try {
         ),
     )
     .toBe(true);
-  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await page.evaluate(() =>
+    window.__lenis
+      ? window.__lenis.scrollTo(0, { immediate: true })
+      : scrollTo({ top: 0, behavior: "instant" }),
+  );
   await expect(page.locator(".hero-line").first()).toHaveCSS("opacity", "1");
   for (const width of [768, 1024, 390, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await noOverflow(page);
   }
-  assert.equal(await page.locator(".pin-spacer").count(), 0);
+  // Only the process section pins (desktop); nothing else may add pins.
+  assert.ok((await page.locator(".pin-spacer").count()) <= 1);
   report.motion.fastReverseResize = true;
   report.motion.traces = await page.evaluate(() => window.__motionEvidence);
   assert.ok(
@@ -371,7 +379,11 @@ try {
       ),
     ),
   );
-  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await page.evaluate(() =>
+    window.__lenis
+      ? window.__lenis.scrollTo(0, { immediate: true })
+      : scrollTo({ top: 0, behavior: "instant" }),
+  );
   await page.screenshot({
     path: "test-results/v2-home-desktop.png",
     fullPage: true,

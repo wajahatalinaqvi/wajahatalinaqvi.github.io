@@ -6,6 +6,11 @@ import { Footer } from "@/components/layout/Footer";
 import { profile } from "@/content/profile";
 import "./globals.css";
 import "./experience.css";
+import "./showcase.css";
+import "./interactive.css";
+import { SmoothScroll } from "@/components/animations/SmoothScroll";
+import { Cursor } from "@/components/animations/Cursor";
+import { CommandPalette } from "@/components/interactive/CommandPalette";
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.url),
@@ -82,6 +87,9 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <SmoothScroll />
+        <Cursor />
+        <CommandPalette />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

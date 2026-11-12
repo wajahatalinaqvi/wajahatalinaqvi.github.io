@@ -3,16 +3,19 @@ import { Button } from "@/components/ui/Button";
 import { SystemVisual } from "@/components/visuals/SystemVisual";
 import { profile } from "@/content/profile";
 import { HeroMotion } from "@/components/animations/HeroMotion";
+import { HeroField } from "@/components/visuals/HeroField";
 
 export function Hero() {
   return (
     <HeroMotion>
       <div className="hero-intro" data-hero>
         <span className="status-dot" />
-        HELLO, I’M WAJAHAT NAQVI
+        <span className="hero-scramble">HELLO, I’M WAJAHAT NAQVI</span>
         <span className="intro-divider" />
-        BASED IN LAHORE, PK
+        <span className="hero-scramble">BASED IN LAHORE, PK</span>
       </div>
+      <HeroField />
+      <div className="hero-spotlight" aria-hidden="true" />
       <h1 id="hero-heading" aria-label="Full-Stack Developer">
         <span className="hero-mask">
           <span className="hero-line">Full-Stack</span>

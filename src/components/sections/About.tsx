@@ -9,7 +9,7 @@ export function About() {
         <Image
           src="/images/wajahat-naqvi.webp"
           alt="Wajahat Naqvi, Full-Stack Developer based in Lahore"
-          width={600}
+          width={720}
           height={720}
           sizes="(max-width: 700px) 90vw, 30vw"
         />

@@ -5,6 +5,10 @@ import { Expertise } from "@/components/sections/Expertise";
 import { Experience } from "@/components/sections/Experience";
 import { Approach } from "@/components/sections/Approach";
 import { Contact } from "@/components/sections/Contact";
+import { Manifesto } from "@/components/sections/Manifesto";
+import { TechMarquee } from "@/components/sections/TechMarquee";
+import { StackLab } from "@/components/interactive/StackLab";
+import { Terminal } from "@/components/interactive/Terminal";
 import { PageMotion } from "@/components/animations/PageMotion";
 
 export default function Home() {
@@ -13,10 +17,14 @@ export default function Home() {
       <PageMotion>
         <Hero />
         <FeaturedProjects />
+        <Manifesto />
         <About />
+        <TechMarquee />
         <Expertise />
+        <StackLab />
         <Experience />
         <Approach />
+        <Terminal />
         <Contact />
       </PageMotion>
     </main>

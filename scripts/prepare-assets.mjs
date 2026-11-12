@@ -24,11 +24,35 @@ for (const [source, destination] of assets) {
     .webp({ quality: 82 })
     .toFile(path.join(root, `public/projects/${destination}.webp`));
 }
-await sharp(path.join(root, "assets/images/LinkednDp.jpeg"))
-  .rotate()
-  .resize({ width: 720, withoutEnlargement: true })
-  .webp({ quality: 86 })
-  .toFile(path.join(root, "public/images/wajahat-naqvi.webp"));
+// The source portrait is a circle on white. Rebuild it as a square: keep the
+// circle (feathered just inside its white rim), fill everything outside it
+// with the photo's own navy backdrop, then crop a head-and-shoulders square
+// whose lower corners stay inside the original circle.
+{
+  const size = 800;
+  const backdrop = { r: 32, g: 63, b: 94 };
+  const mask = Buffer.from(
+    `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="400" cy="400" r="388" fill="#fff" filter="url(#f)"/></svg>`,
+  );
+  const circle = await sharp(path.join(root, "assets/images/LinkednDp.jpeg"))
+    .rotate()
+    .resize(size, size)
+    .ensureAlpha()
+    .composite([{ input: mask, blend: "dest-in" }])
+    .png()
+    .toBuffer();
+  const square = await sharp({
+    create: { width: size, height: size, channels: 3, background: backdrop },
+  })
+    .composite([{ input: circle }])
+    .png()
+    .toBuffer();
+  await sharp(square)
+    .extract({ left: 110, top: 25, width: 580, height: 580 })
+    .resize(720, 720)
+    .webp({ quality: 86 })
+    .toFile(path.join(root, "public/images/wajahat-naqvi.webp"));
+}
 await copyFile(
   path.join(root, "assets/WajahatNaqvi - Software Engineer.pdf"),
   path.join(root, "public/resume/Wajahat-Naqvi.pdf"),

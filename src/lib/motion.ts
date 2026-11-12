@@ -1,9 +1,22 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+import { Draggable } from "gsap/Draggable";
+import { InertiaPlugin } from "gsap/InertiaPlugin";
+import { Flip } from "gsap/Flip";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
-export { gsap, ScrollTrigger, useGSAP };
+gsap.registerPlugin(
+  ScrollTrigger,
+  SplitText,
+  ScrambleTextPlugin,
+  Draggable,
+  InertiaPlugin,
+  Flip,
+  useGSAP,
+);
+export { gsap, ScrollTrigger, SplitText, Draggable, Flip, useGSAP };
 
 export const motionConditions = {
   desktop: "(min-width: 900px)",

@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Command, Menu, X } from "lucide-react";
+import { openPalette } from "@/components/interactive/CommandPalette";
 import { profile } from "@/content/profile";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/motion";
 
 const links = ["Work", "About", "Expertise", "Experience", "Contact"];
+// Stack Lab and Terminal are reachable through the command palette.
 
 export function Header() {
   const pathname = usePathname();
@@ -108,6 +110,17 @@ export function Header() {
         <Link className="header-note" href="/#contact">
           Developer. Problem solver.
         </Link>
+        <button
+          type="button"
+          className="palette-trigger"
+          onClick={openPalette}
+          aria-label="Open command palette"
+          aria-keyshortcuts="Control+K Meta+K /"
+          data-cursor="Search"
+        >
+          <Command size={14} aria-hidden="true" />
+          <span>K</span>
+        </button>
         <button
           ref={toggle}
           className="menu-toggle"

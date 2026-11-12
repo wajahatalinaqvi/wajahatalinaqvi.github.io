@@ -125,3 +125,39 @@ Real iOS/Safari devices and real screen-reader testing were not available in thi
 Live Formspree account status and inbox delivery still require a consented live submission. Existing case-study architecture/outcome verification notes remain unchanged. This work does not invent missing facts. The existing résumé PDF is preserved and may need a separate content update.
 
 The original root HTML/assets, project data, employment dates, Next.js static export configuration, and production branch remain unchanged. No push, merge, Pages setting change, or deployment was performed. Deployment still requires approval.
+
+## V3 showcase layer
+
+Built on the V2 system using GSAP 3.15's bundled SplitText and ScrambleText plus `lenis` for inertial wheel scrolling. Styles live in `src/app/showcase.css`.
+
+- **Smooth scroll** (`SmoothScroll.tsx`): Lenis runs on the GSAP ticker for fine pointers only. Touch, keyboard and reduced-motion users get native scroll. Anchor links route through Lenis with header offset.
+- **Context cursor** (`Cursor.tsx`): a trailing ring grows on links and expands into a labelled pill on `[data-cursor]` targets (project images read "View case"). Fine pointer only; the native cursor stays visible.
+- **Hero**: eyebrow text decodes via ScrambleText; headline letters rise through the line masks; letters lift and flash mint under the pointer; a cursor-following spotlight sits behind; on scroll the two headline lines part horizontally and fade.
+- **Headings**: every section `h2` splits into masked lines/words that rise on entry; eyebrow markers spin in.
+- **Manifesto** (new section after Work): words brighten and un-blur in step with scroll, with key words in mint, and a rule draws underneath.
+- **Tech marquee** (new section after About): two counter-moving rails listing every technology from `skills.ts`. Scroll velocity boosts speed, flips direction and skews the rows. Pauses offscreen; screen readers get a plain list.
+- **Skills explorer**: the category code label scrambles on tab change; technology cards flip in in 3D; marks spring in; a pointer spotlight tracks across the card grid.
+- **Projects**: frames open from an inset rounded clip to full bleed as they rise through the viewport.
+- **Process** (desktop ≥900px): the section pins once and the five stages travel horizontally with outlined numerals parallax, a progress rail and a live 01/05 counter. Smaller screens keep a vertical reveal. This is the only pinned section.
+- **Footer**: a viewport-wide "Wajahat Naqvi" signature rises letter by letter from the centre and warms toward mint over the last stretch of scroll.
+
+QA updates: the hero entrance check accepts per-letter movement, the scroll helper jumps Lenis directly when it is active, and the pin assertion allows the one process pin. Local Lighthouse mobile simulation: home 95/100/100/100, case study 100/100/100/100.
+
+## V4 interactive layer
+
+Patterns drawn from a survey of current interactive developer portfolios (Awwwards portfolio honourees, command-palette and terminal portfolios). All content comes from the existing `projects.ts`, `skills.ts`, `experience.ts` and `profile.ts`; nothing new is claimed. Styles live in `src/app/interactive.css`; components in `src/components/interactive/`.
+
+- **Command palette** (`CommandPalette.tsx`): `⌘K` / `Ctrl+K` / `/` anywhere, or the header button. Fuzzy search over sections, all eight projects (by name, type, stack) and actions: copy email, résumé, GitHub, LinkedIn. ARIA combobox + listbox, arrow keys, Enter, Esc, focus returns to the opener. Section jumps go through Lenis.
+- **Stack Lab** (`StackLab.tsx`, new section after Expertise): every technology in the project data as a token with its usage count. Fine pointers can drag and throw tokens (Draggable + Inertia, bounded to the arena), drop them on the tray, scatter or reset. Tap or keyboard toggles them everywhere. Projects re-rank by overlap with a Flip animation, matching stack tags light up, a meter shows the share, and a live status line reports the result. Touch screens get tap-only so dragging never traps page scroll.
+- **Terminal** (`Terminal.tsx`, new section after the process): `help`, `whoami`, `skills [category]`, `projects`, `open <project>`, `stack <tech>`, `experience`, `goto <section>`, `contact`, `email`, `resume`, `clear`, plus easter eggs (`sudo hire-me`, `coffee`, `rm`). Tab completes commands, project slugs, sections and categories; ↑/↓ walks history; Ctrl+L clears. Output is a polite live region; suggestion buttons run commands for touch users.
+- **Archive previews**: hovering a row in “More from the archive” shows that project's screenshot trailing the cursor, tilting with horizontal velocity. Fine pointer only.
+- **Fixes**: removed ScrollTrigger snapping from the pinned process section because it fought Lenis and pulled the page toward that section from elsewhere; renamed the global cursor flag to `data-custom-cursor` so it no longer collides with `[data-cursor]` labels.
+
+Local Lighthouse mobile simulation, three runs: home 79 / 93 / 94 performance (variance from a late hydration task under 4× CPU throttle), 100 accessibility, best practices and SEO each run; case study 100 across the board.
+
+## V5 hero field and square portrait
+
+- **Hero dot field** (`src/components/visuals/HeroField.tsx`): a full-bleed canvas grid behind the headline. Dots breathe in a slow diagonal wave, part around a mouse pointer and glow mint near it, and a click or tap on empty hero space sends a shockwave ring. The loop runs only while the hero is on screen and the tab is visible; reduced motion draws one static frame. Device pixel ratio is capped at 2.
+- **Square portrait**: the source photo is a circle on white. `scripts/prepare-assets.mjs` now fills everything outside the circle with the photo's own navy backdrop (#203F5E) and crops a 1:1 head-and-shoulders square, so the frame no longer shows white corners. The About frame is 1:1, and the grayscale portrait warms to full colour on hover.
+
+Local Lighthouse after this change: home 92/100/100/100, case study 99/100/100/100.

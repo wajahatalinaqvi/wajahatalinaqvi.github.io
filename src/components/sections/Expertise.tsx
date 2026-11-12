@@ -12,7 +12,13 @@ import { skills, type SkillCategoryId } from "@/content/skills";
 import { projects } from "@/content/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StackDiagram } from "@/components/visuals/StackDiagram";
-import { gsap, ScrollTrigger, useGSAP, motionConditions } from "@/lib/motion";
+import {
+  gsap,
+  ScrollTrigger,
+  useGSAP,
+  motionConditions,
+  pointerQuery,
+} from "@/lib/motion";
 
 const icons = [Braces, Database, ShoppingBag, GitBranch];
 export function Expertise() {
@@ -43,12 +49,66 @@ export function Expertise() {
             },
           })
           .from(".skills-panel-intro", { y: 16, opacity: 0, duration: 0.4 })
+          .to(
+            ".skills-panel-intro h3",
+            {
+              duration: 0.8,
+              ease: "none",
+              scrambleText: {
+                text: category.code,
+                chars: "<>/{}[]=_01",
+                speed: 0.8,
+              },
+            },
+            0,
+          )
           .from(
             ".technology-card",
-            { y: 20, opacity: 0, stagger: 0.055, duration: 0.45 },
+            {
+              y: 34,
+              rotateX: -55,
+              opacity: 0,
+              transformOrigin: "50% 0%",
+              stagger: { each: 0.06, grid: "auto", from: "start" },
+              duration: 0.75,
+              ease: "expo.out",
+            },
             0.07,
           )
+          .from(
+            ".technology-mark",
+            {
+              scale: 0,
+              rotate: -90,
+              stagger: 0.06,
+              duration: 0.6,
+              ease: "back.out(2.5)",
+            },
+            0.2,
+          )
           .from(".skill-evidence", { y: 12, opacity: 0, duration: 0.4 }, 0.15);
+      });
+      media.add(pointerQuery, () => {
+        const grid =
+          root.current!.querySelector<HTMLElement>(".technology-grid");
+        if (!grid) return;
+        const move = (event: PointerEvent) => {
+          for (const card of grid.querySelectorAll<HTMLElement>(
+            ".technology-card",
+          )) {
+            const bounds = card.getBoundingClientRect();
+            card.style.setProperty(
+              "--glow-x",
+              `${event.clientX - bounds.left}px`,
+            );
+            card.style.setProperty(
+              "--glow-y",
+              `${event.clientY - bounds.top}px`,
+            );
+          }
+        };
+        grid.addEventListener("pointermove", move, { passive: true });
+        return () => grid.removeEventListener("pointermove", move);
       });
       const refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
       return () => {
