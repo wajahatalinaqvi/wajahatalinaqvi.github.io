@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { ArrowUpRight, Check, Copy, Github, Linkedin } from "lucide-react";
 import { profile } from "@/content/profile";
 
@@ -9,11 +9,35 @@ export function Contact() {
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [copyStatus, setCopyStatus] = useState("");
+  const [errors, setErrors] = useState<
+    Partial<Record<"fullname" | "email" | "message", string>>
+  >({});
+  const feedback = useRef<HTMLDivElement>(null);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
     if (data.get("_gotcha")) return;
+    const fields = {
+      fullname: form.elements.namedItem("fullname") as HTMLInputElement,
+      email: form.elements.namedItem("email") as HTMLInputElement,
+      message: form.elements.namedItem("message") as HTMLTextAreaElement,
+    };
+    const nextErrors: typeof errors = {};
+    if (!fields.fullname.value.trim())
+      nextErrors.fullname = "Please enter your name.";
+    if (!fields.email.value.trim() || fields.email.validity.typeMismatch)
+      nextErrors.email = "Please enter a valid email address.";
+    if (fields.message.value.trim().length < 10)
+      nextErrors.message =
+        "Please tell me a little more — at least 10 characters.";
+    setErrors(nextErrors);
+    const firstError = (Object.keys(nextErrors) as (keyof typeof fields)[])[0];
+    if (firstError) {
+      fields[firstError].focus();
+      setStatus("idle");
+      return;
+    }
     setStatus("sending");
     try {
       const response = await fetch(form.action, {
@@ -27,6 +51,7 @@ export function Contact() {
       form.reset();
     } catch {
       setStatus("error");
+      feedback.current?.focus();
     }
   }
   async function copy() {
@@ -93,42 +118,85 @@ export function Contact() {
           action="https://formspree.io/f/xdoqjgzv"
           method="POST"
           onSubmit={submit}
+          ref={(form) => {
+            if (form) form.noValidate = true;
+          }}
+          aria-busy={status === "sending"}
         >
           <p className="form-title">Or leave a note.</p>
           <div className="form-row">
-            <label>
-              Your name
-              <input
-                name="fullname"
-                autoComplete="name"
-                placeholder="Alex Morgan"
-                required
-                maxLength={120}
-              />
-            </label>
-            <label>
-              Email address
-              <input
-                type="email"
-                name="email"
-                autoComplete="email"
-                placeholder="alex@company.com"
-                required
-                maxLength={254}
-              />
-            </label>
+            <div className="form-field">
+              <label>
+                Your name
+                <span aria-hidden="true" className="required-marker">
+                  {" "}
+                  *
+                </span>
+                <input
+                  name="fullname"
+                  autoComplete="name"
+                  placeholder="Alex Morgan"
+                  required
+                  maxLength={120}
+                  aria-invalid={!!errors.fullname}
+                  aria-describedby={errors.fullname ? "name-error" : undefined}
+                />
+              </label>
+              {errors.fullname && (
+                <span id="name-error" className="field-error">
+                  {errors.fullname}
+                </span>
+              )}
+            </div>
+            <div className="form-field">
+              <label>
+                Email address
+                <span aria-hidden="true" className="required-marker">
+                  {" "}
+                  *
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder="alex@company.com"
+                  required
+                  maxLength={254}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                />
+              </label>
+              {errors.email && (
+                <span id="email-error" className="field-error">
+                  {errors.email}
+                </span>
+              )}
+            </div>
           </div>
-          <label>
-            What are you working on?
-            <textarea
-              name="message"
-              placeholder="Tell me a little about your project…"
-              rows={4}
-              required
-              minLength={10}
-              maxLength={5000}
-            />
-          </label>
+          <div className="form-field">
+            <label>
+              What are you working on?
+              <span aria-hidden="true" className="required-marker">
+                {" "}
+                *
+              </span>
+              <textarea
+                name="message"
+                placeholder="Tell me a little about your project…"
+                rows={4}
+                required
+                minLength={10}
+                maxLength={5000}
+                aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? "message-error" : undefined}
+              />
+            </label>
+            {errors.message && (
+              <span id="message-error" className="field-error">
+                {errors.message}
+              </span>
+            )}
+          </div>
           <div className="honeypot" aria-hidden="true">
             <label>
               Leave this empty
@@ -141,12 +209,15 @@ export function Contact() {
               className="button button-primary"
               disabled={status === "sending"}
               type="submit"
+              data-magnetic
             >
               {status === "sending" ? "Sending…" : "Send message"}
               <ArrowUpRight size={16} aria-hidden="true" />
             </button>
           </div>
           <div
+            ref={feedback}
+            tabIndex={-1}
             role="status"
             aria-live="polite"
             className={`form-status ${status}`}

@@ -30,16 +30,20 @@ Open http://127.0.0.1:4173. The production artifact is `out/`, including `out/in
 ```sh
 npx playwright install chromium
 npm run test:browser
+npm run test:motion
 npm run test:lighthouse
 ```
 
-The browser script starts its own temporary static server. It checks responsive overflow, keyboard access, navigation, filtering, the archive, accordion, direct and client project navigation, reduced motion, content with JavaScript disabled, and axe scans. Contact responses are mocked; no real messages are sent. Screenshots and JSON/HTML reports go to ignored `test-results/`.
+The browser script starts its own temporary static server. It checks responsive overflow, keyboard access, navigation, filtering, the archive, technology tabs, direct and client project navigation, reduced motion, content with JavaScript disabled, and axe scans. Contact responses are mocked; no real messages are sent. Screenshots and JSON/HTML reports go to ignored `test-results/`.
+
+The V2 experience adds a four-category technology explorer, a selectable architecture scene, distinct section reveals, and scroll-linked progression. `test:motion` checks actual transform changes, image masks, connector drawing, pointer tilt, reversible timeline progression, category keyboard controls, rapid changes, touch input, resize, reduced motion, and a simulated 6x CPU slowdown. See [docs/EXPERIENCE-V2.md](docs/EXPERIENCE-V2.md) for implementation details and current results.
 
 To use installed Microsoft Edge on Windows:
 
 ```powershell
 $env:BROWSER_CHANNEL='msedge'
 npm.cmd run test:browser
+npm.cmd run test:motion
 ```
 
 Lighthouse uses an installed Chrome. If discovery fails:
@@ -56,6 +60,7 @@ npm.cmd run test:lighthouse
 - `src/components/sections/`: independent page sections.
 - `src/components/ui/`: buttons, headings, and project cards.
 - `src/components/animations/`: scoped GSAP lifecycle and reduced-motion handling.
+- `src/lib/motion.ts`: shared media conditions and event-driven pointer helpers.
 - `src/components/visuals/`: pointer-responsive CSS/SVG architectural visual.
 - `src/content/`: typed projects, career timeline, skills, and profile links.
 - `public/`: optimized existing project assets, portrait, résumé, sharing image, and `.nojekyll`.
@@ -85,7 +90,7 @@ To roll back after a release, revert the approved redesign merge on `main` and r
 
 ## Contact
 
-The existing Formspree endpoint is preserved: `https://formspree.io/f/xdoqjgzv`. The form works from static hosting with a native POST fallback, browser validation, a honeypot, a request timeout, a sending state, a success state, and a recoverable error with an email fallback.
+The existing Formspree endpoint is preserved: `https://formspree.io/f/xdoqjgzv`. The form works from static hosting with a native POST fallback, inline validation when JavaScript is available, native validation without JavaScript, associated error messages, a honeypot, a request timeout, a sending state, a success state, and a recoverable error with an email fallback.
 
 Automated tests verify both response paths without sending email. Account ownership, activation, origin settings, service quotas, spam filtering, and actual inbox delivery need a consented live test before release. No credentials are stored in this repository.
 

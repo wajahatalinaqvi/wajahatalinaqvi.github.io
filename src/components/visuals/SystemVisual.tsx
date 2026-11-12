@@ -1,86 +1,201 @@
 "use client";
+import { useRef, useState } from "react";
+import { Braces, Database, Layers3, ShoppingBag, Workflow } from "lucide-react";
+import {
+  gsap,
+  useGSAP,
+  motionConditions,
+  pointerQuery,
+  bindPointerMotion,
+} from "@/lib/motion";
 
-import { useRef, type PointerEvent } from "react";
-import { Braces, Database, Layers3, Workflow } from "lucide-react";
+const layers = [
+  {
+    id: "frontend",
+    title: "Frontend",
+    tech: "React · TypeScript",
+    detail:
+      "React interfaces and user experiences. Reusable components and interactions that make a product clear.",
+    icon: Layers3,
+  },
+  {
+    id: "api",
+    title: "APIs",
+    tech: "REST · GraphQL · OAuth",
+    detail:
+      "REST, GraphQL, OAuth, and integrations. Clear contracts connecting interfaces, services, and platforms.",
+    icon: Workflow,
+  },
+  {
+    id: "backend",
+    title: "Backend",
+    tech: "PHP · Laravel",
+    detail:
+      "Laravel applications and business logic. Structured workflows behind the interface.",
+    icon: Database,
+  },
+  {
+    id: "commerce",
+    title: "Commerce",
+    tech: "Shopify · Liquid · Apps",
+    detail:
+      "Shopify apps and custom ecommerce functionality, connected to the wider product experience.",
+    icon: ShoppingBag,
+  },
+] as const;
+type LayerId = (typeof layers)[number]["id"];
 
 export function SystemVisual() {
-  const ref = useRef<HTMLDivElement>(null);
-  function move(event: PointerEvent<HTMLDivElement>) {
-    if (
-      !matchMedia(
-        "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
-      ).matches
-    )
-      return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = Math.max(
-      -1,
-      Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1),
-    );
-    const y = Math.max(
-      -1,
-      Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1),
-    );
-    ref.current?.style.setProperty("--tilt-x", `${-y * 5}deg`);
-    ref.current?.style.setProperty("--tilt-y", `${x * 7}deg`);
-  }
-  function reset() {
-    ref.current?.style.setProperty("--tilt-x", "0deg");
-    ref.current?.style.setProperty("--tilt-y", "0deg");
-  }
+  const [selected, setSelected] = useState<LayerId>("frontend");
+  const root = useRef<HTMLDivElement>(null);
+  const active = layers.find((layer) => layer.id === selected)!;
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add(pointerQuery, () =>
+        bindPointerMotion(
+          root.current!,
+          root.current!.querySelector<HTMLElement>(
+            ".architecture-perspective",
+          )!,
+          "tilt",
+        ),
+      );
+      media.add(motionConditions, (context) => {
+        if (context.conditions!.reduce) return;
+        gsap.utils
+          .toArray<SVGPathElement>(".architecture-wire")
+          .forEach((path) => {
+            const length = path.getTotalLength();
+            gsap.fromTo(
+              path,
+              { strokeDasharray: length, strokeDashoffset: length },
+              {
+                strokeDashoffset: 0,
+                duration: 0.85,
+                ease: "power2.inOut",
+                scrollTrigger: {
+                  trigger: root.current,
+                  start: "top 92%",
+                  once: true,
+                },
+              },
+            );
+          });
+      });
+      return () => media.revert();
+    },
+    { scope: root },
+  );
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          ".architecture-explanation > p",
+          { y: 6, opacity: 0.4 },
+          { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" },
+        );
+      });
+      return () => media.revert();
+    },
+    { scope: root, dependencies: [selected], revertOnUpdate: true },
+  );
+
   return (
-    <div
-      className="system-visual"
-      onPointerMove={move}
-      onPointerLeave={reset}
-      aria-hidden="true"
-    >
-      <div className="visual-grid" />
-      <div className="system-world" ref={ref}>
-        <svg className="system-wires" viewBox="0 0 900 320" fill="none">
-          <path d="M170 120H280L350 185H550L620 120H730M450 185V65M450 185V285" />
-          <path className="wire-accent" d="M280 120L350 185H550L620 120" />
-          <circle cx="450" cy="65" r="4" />
-          <circle cx="450" cy="285" r="4" />
-        </svg>
-        <div className="system-node node-interface">
-          <Layers3 size={24} />
-          <span>01 / INTERFACE</span>
-          <strong>Thoughtful by design.</strong>
-          <div className="mini-interface">
-            <i />
-            <i />
-            <i />
+    <div className="architecture-enter" ref={root}>
+      <div className="architecture-scroll">
+        <div className="architecture-perspective">
+          <div className="architecture-stage" data-selected={selected}>
+            <div className="architecture-grid" aria-hidden="true" />
+            <svg
+              className="architecture-connections architecture-connections-desktop"
+              viewBox="0 0 1000 380"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                className={`architecture-wire ${selected === "frontend" ? "is-active" : ""}`}
+                d="M240 151H330L446 190"
+              />
+              <path
+                className={`architecture-wire ${selected === "api" ? "is-active" : ""}`}
+                d="M500 85V153"
+              />
+              <path
+                className={`architecture-wire ${selected === "backend" ? "is-active" : ""}`}
+                d="M760 151H670L554 190"
+              />
+              <path
+                className={`architecture-wire ${selected === "commerce" ? "is-active" : ""}`}
+                d="M500 230V284"
+              />
+            </svg>
+            <svg
+              className="architecture-connections architecture-connections-mobile"
+              viewBox="0 0 400 350"
+              fill="none"
+              aria-hidden="true"
+            >
+              {[
+                "M95 102V133L180 165",
+                "M305 102V133L220 165",
+                "M95 250V218L180 185",
+                "M305 250V218L220 185",
+              ].map((d, i) => (
+                <path
+                  key={d}
+                  d={d}
+                  className={`architecture-wire ${selected === layers[i].id ? "is-active" : ""}`}
+                />
+              ))}
+            </svg>
+            {layers.map(({ id, title, tech, icon: Icon }) => (
+              <div key={id} className={`architecture-layer architecture-${id}`}>
+                <button
+                  type="button"
+                  className="architecture-panel"
+                  aria-label={`Explore ${title.toLowerCase()} layer`}
+                  aria-pressed={selected === id}
+                  aria-describedby="architecture-explanation"
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === "mouse") setSelected(id);
+                  }}
+                  onFocus={() => setSelected(id)}
+                  onClick={() => setSelected(id)}
+                >
+                  <Icon size={22} aria-hidden="true" />
+                  <span className="architecture-panel-name">{title}</span>
+                  <span className="architecture-panel-tech">{tech}</span>
+                  <span
+                    className="architecture-panel-corner"
+                    aria-hidden="true"
+                  >
+                    ↗
+                  </span>
+                </button>
+              </div>
+            ))}
+            <div className="architecture-core" aria-hidden="true">
+              <span className="architecture-core-base" />
+              <span className="architecture-core-middle" />
+              <span className="architecture-core-top">
+                <Braces size={42} strokeWidth={1.2} />
+              </span>
+              <span className="architecture-core-caption">
+                ONE CONNECTED SYSTEM
+              </span>
+            </div>
           </div>
         </div>
-        <div className="system-core">
-          <div className="core-top">
-            <Braces size={38} strokeWidth={1.2} />
-          </div>
-          <div className="core-layer core-layer-one" />
-          <div className="core-layer core-layer-two" />
-          <span>CONNECTED BY CODE</span>
-        </div>
-        <div className="system-node node-backend">
-          <Database size={24} />
-          <span>03 / INFRASTRUCTURE</span>
-          <strong>Reliable at the core.</strong>
-          <div className="mini-code">
-            <i />
-            <i />
-            <i />
-          </div>
-        </div>
-        <div className="api-node">
-          <Workflow size={15} />
-          <span>API & INTEGRATIONS</span>
-        </div>
-        <span className="visual-coordinate coordinate-left">
-          FRONTEND → BACKEND
+      </div>
+      <div className="architecture-explanation" id="architecture-explanation">
+        <span className="architecture-explanation-label">
+          <span className="status-dot" />
+          {active.title}
         </span>
-        <span className="visual-coordinate coordinate-right">
-          ONE CONNECTED SYSTEM
-        </span>
+        <p>{active.detail}</p>
+        <span className="architecture-hint">EXPLORE A LAYER</span>
       </div>
     </div>
   );

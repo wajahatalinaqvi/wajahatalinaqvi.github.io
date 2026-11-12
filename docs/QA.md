@@ -1,5 +1,7 @@
 # Verification record
 
+This is the original V1 baseline. See [EXPERIENCE-V2.md](EXPERIENCE-V2.md) for the subsequent interaction work and current verification results.
+
 Verified locally on November 12, 2026 using Node 22.23.2 on Windows, against the production static export. Browser automation used installed Microsoft Edge (Chromium). Lighthouse used headless Google Chrome with its default mobile simulation.
 
 ## Results

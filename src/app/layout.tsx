@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { profile } from "@/content/profile";
 import "./globals.css";
+import "./experience.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.url),

@@ -70,11 +70,10 @@ try {
   await expect(page.locator(".project-grid article")).toHaveCount(4);
   await page.getByText("More from the archive", { exact: false }).click();
   await expect(page.locator(".archive-list a")).toHaveCount(4);
-  await page.getByRole("button", { name: /Backend Structure/ }).click();
-  await expect(
-    page.getByRole("region", { name: /Backend Structure/ }),
-  ).toBeVisible();
-  report.interactions.push("Project filters, archive, and expertise accordion");
+  await page.getByRole("tab", { name: /^Backend/ }).click();
+  await expect(page.getByRole("tabpanel", { name: /^Backend/ })).toBeVisible();
+  await expect(page.locator(".technology-card")).toHaveCount(6);
+  report.interactions.push("Project filters, archive, and technology tabs");
   const scan = async (name) => {
     const result = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
@@ -89,7 +88,9 @@ try {
       `Accessibility: ${name}`,
     );
   };
-  await scan("Home desktop, archive and accordion expanded");
+  await scan(
+    "Home desktop, archive expanded and backend technologies selected",
+  );
   await page.route("https://formspree.io/**", (route) =>
     route.fulfill({
       status: 200,
@@ -97,12 +98,25 @@ try {
       body: '{"ok":true}',
     }),
   );
-  await page.getByLabel("Your name", { exact: true }).fill("Portfolio QA");
+  await page.getByRole("button", { name: "Send message" }).click();
+  await expect(
+    page.getByRole("textbox", { name: "Your name", exact: true }),
+  ).toBeFocused();
+  await expect(
+    page.getByRole("textbox", { name: "Your name", exact: true }),
+  ).toHaveAttribute("aria-invalid", "true");
+  await expect(
+    page.getByText("Please enter a valid email address."),
+  ).toBeVisible();
+  await scan("Contact validation errors and associated descriptions");
   await page
-    .getByLabel("Email address", { exact: true })
+    .getByRole("textbox", { name: "Your name", exact: true })
+    .fill("Portfolio QA");
+  await page
+    .getByRole("textbox", { name: "Email address", exact: true })
     .fill("qa@example.com");
   await page
-    .getByLabel("What are you working on?", { exact: true })
+    .getByRole("textbox", { name: "What are you working on?", exact: true })
     .fill("Testing the contact interaction without sending a real message.");
   await page.getByRole("button", { name: "Send message" }).click();
   await expect(
@@ -116,12 +130,14 @@ try {
       body: '{"error":"test"}',
     }),
   );
-  await page.getByLabel("Your name", { exact: true }).fill("Portfolio QA");
   await page
-    .getByLabel("Email address", { exact: true })
+    .getByRole("textbox", { name: "Your name", exact: true })
+    .fill("Portfolio QA");
+  await page
+    .getByRole("textbox", { name: "Email address", exact: true })
     .fill("qa@example.com");
   await page
-    .getByLabel("What are you working on?", { exact: true })
+    .getByRole("textbox", { name: "What are you working on?", exact: true })
     .fill("Testing the recoverable error state without sending a message.");
   await page.getByRole("button", { name: "Send message" }).click();
   await expect(page.getByText(/Your message couldn’t be sent/)).toBeVisible();
@@ -160,8 +176,8 @@ try {
   await page.locator("#contact").scrollIntoViewIfNeeded();
   await page.evaluate(() =>
     Promise.all(
-      Array.from(document.images).map((image) =>
-        image.decode().catch(() => {}),
+      Array.from(document.images).map(
+        (image) => ((image.loading = "eager"), image.decode().catch(() => {})),
       ),
     ),
   );
@@ -176,8 +192,8 @@ try {
   await page.locator("#contact").scrollIntoViewIfNeeded();
   await page.evaluate(() =>
     Promise.all(
-      Array.from(document.images).map((image) =>
-        image.decode().catch(() => {}),
+      Array.from(document.images).map(
+        (image) => ((image.loading = "eager"), image.decode().catch(() => {})),
       ),
     ),
   );

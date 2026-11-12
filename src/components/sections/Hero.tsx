@@ -2,21 +2,26 @@ import { ArrowDown, ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SystemVisual } from "@/components/visuals/SystemVisual";
 import { profile } from "@/content/profile";
+import { HeroMotion } from "@/components/animations/HeroMotion";
 
 export function Hero() {
   return (
-    <section className="hero container" aria-labelledby="hero-heading">
+    <HeroMotion>
       <div className="hero-intro" data-hero>
         <span className="status-dot" />
         HELLO, I’M WAJAHAT NAQVI
         <span className="intro-divider" />
         BASED IN LAHORE, PK
       </div>
-      <h1 id="hero-heading" data-hero>
-        Full-Stack
-        <br />
-        <span>Developer</span>
-        <span className="headline-period">.</span>
+      <h1 id="hero-heading" aria-label="Full-Stack Developer">
+        <span className="hero-mask">
+          <span className="hero-line">Full-Stack</span>
+        </span>
+        <span className="hero-mask hero-secondary">
+          <span className="hero-line">
+            Developer<span className="headline-period">.</span>
+          </span>
+        </span>
       </h1>
       <p className="hero-description" data-hero>
         Building thoughtful digital products
@@ -49,6 +54,6 @@ export function Hero() {
         </a>
         <span>GOOD INTERFACES. SOLID FOUNDATIONS.</span>
       </div>
-    </section>
+    </HeroMotion>
   );
 }

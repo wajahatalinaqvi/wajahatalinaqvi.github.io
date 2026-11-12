@@ -31,8 +31,11 @@ export function Experience() {
         <div className="timeline">
           <span className="timeline-progress" aria-hidden="true" />
           <ol>
-            {experience.map((item) => (
-              <li key={item.company} data-reveal>
+            {experience.map((item, index) => (
+              <li
+                key={item.company}
+                className={index === 0 ? "current-role" : undefined}
+              >
                 <div className="timeline-dot" />
                 <div className="timeline-meta">
                   <p>{item.period}</p>
@@ -40,7 +43,7 @@ export function Experience() {
                 </div>
                 <h3>{item.title}</h3>
                 <h4>{item.company}</h4>
-                <p>{item.description}</p>
+                <p className="timeline-description">{item.description}</p>
               </li>
             ))}
           </ol>

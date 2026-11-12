@@ -34,7 +34,10 @@ The original `index.html` and `assets/` are unchanged. The following files were 
 - `src/components/sections/Approach.tsx`
 - `src/components/sections/Contact.tsx`
 - `src/components/animations/PageMotion.tsx`
+- `src/components/animations/HeroMotion.tsx`
+- `src/components/animations/ProjectMotion.tsx`
 - `src/components/visuals/SystemVisual.tsx`
+- `src/components/visuals/StackDiagram.tsx`
 - `src/components/ui/Button.tsx`
 - `src/components/ui/SectionHeading.tsx`
 - `src/components/ui/ProjectCard.tsx`
@@ -42,6 +45,8 @@ The original `index.html` and `assets/` are unchanged. The following files were 
 - `src/content/projects.ts`
 - `src/content/experience.ts`
 - `src/content/skills.ts`
+- `src/lib/motion.ts`
+- `src/app/experience.css`
 
 ## Static assets
 
@@ -66,10 +71,12 @@ The original `index.html` and `assets/` are unchanged. The following files were 
 - `scripts/serve.mjs`
 - `scripts/check-export.mjs`
 - `scripts/browser-qa.mjs`
+- `scripts/motion-qa.mjs`
 - `scripts/lighthouse-qa.mjs`
 - `README.md`
 - `docs/AUDIT.md`
 - `docs/QA.md`
 - `docs/FILES.md`
+- `docs/EXPERIENCE-V2.md`
 
 Generated build output (`.next/`, `out/`), dependency installations (`node_modules/`), and local QA reports (`test-results/`) are ignored.

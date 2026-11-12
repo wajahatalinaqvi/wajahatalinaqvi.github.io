@@ -2,16 +2,50 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { profile } from "@/content/profile";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/motion";
 
 const links = ["Work", "About", "Expertise", "Experience", "Contact"];
 
 export function Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
   const toggle = useRef<HTMLButtonElement>(null);
   const nav = useRef<HTMLElement>(null);
+  const header = useRef<HTMLElement>(null);
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".header-inner", {
+          y: -10,
+          opacity: 0,
+          duration: 0.65,
+          ease: "power3.out",
+        });
+        gsap.fromTo(
+          ".reading-progress",
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              id: "reading-progress",
+              start: 0,
+              end: () => ScrollTrigger.maxScroll(window),
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          },
+        );
+      });
+      return () => media.revert();
+    },
+    { scope: header, dependencies: [pathname], revertOnUpdate: true },
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,7 +59,7 @@ export function Header() {
       .querySelectorAll("main section[id]")
       .forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -64,7 +98,8 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="site-header">
+    <header ref={header} className="site-header">
+      <span className="reading-progress" aria-hidden="true" />
       <div className="header-inner">
         <Link className="wordmark" href="/" aria-label="Wajahat Naqvi home">
           w<span className="wordmark-slash">/</span>n
@@ -95,7 +130,9 @@ export function Header() {
               key={link}
               href={`/#${link.toLowerCase()}`}
               aria-current={
-                active === link.toLowerCase() ? "location" : undefined
+                pathname === "/" && active === link.toLowerCase()
+                  ? "location"
+                  : undefined
               }
               onClick={() => setOpen(false)}
             >

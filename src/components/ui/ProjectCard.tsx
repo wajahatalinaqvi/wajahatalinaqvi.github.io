@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/content/projects";
+import { ProjectMotion } from "@/components/animations/ProjectMotion";
 
 export function ProjectCard({
   project,
@@ -11,29 +12,38 @@ export function ProjectCard({
   index: number;
 }) {
   return (
-    <article className={`project-card project-${project.tone}`} data-reveal>
+    <ProjectMotion tone={project.tone}>
       <Link
         className="project-image-link"
         href={`/projects/${project.slug}/`}
         aria-label={`View ${project.name} case study`}
       >
-        <div className="project-image">
-          <div className="browser-chrome">
-            <span />
-            <span />
-            <span />
-            <p>{project.name.toLowerCase().replaceAll(" ", "")}</p>
-            <ArrowUpRight size={12} />
+        <div className="project-scroll">
+          <div className="project-tilt">
+            <div className="project-image">
+              <div className="browser-chrome">
+                <span />
+                <span />
+                <span />
+                <p>{project.name.toLowerCase().replaceAll(" ", "")}</p>
+                <ArrowUpRight size={12} />
+              </div>
+              <Image
+                src={project.image}
+                alt={project.alt}
+                width={1200}
+                height={800}
+                sizes="(max-width: 700px) 92vw, 44vw"
+                className="project-screenshot"
+              />
+            </div>
           </div>
-          <Image
-            src={project.image}
-            alt={project.alt}
-            width={1200}
-            height={800}
-            sizes="(max-width: 700px) 92vw, 44vw"
-            className="project-screenshot"
-          />
         </div>
+        <span className="project-shutter" aria-hidden="true" />
+        <span className="project-focus-ring" aria-hidden="true" />
+        <span className="project-view-cue" aria-hidden="true">
+          View project <ArrowUpRight size={14} />
+        </span>
         <span className="project-open">
           <ArrowUpRight size={21} aria-hidden="true" />
         </span>
@@ -72,6 +82,6 @@ export function ProjectCard({
           </div>
         </div>
       </div>
-    </article>
+    </ProjectMotion>
   );
 }

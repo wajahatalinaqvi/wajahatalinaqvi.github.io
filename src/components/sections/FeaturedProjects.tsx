@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { projects } from "@/content/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { ScrollTrigger, useGSAP } from "@/lib/motion";
 
 const filters = ["All work", "Applications", "Storefronts"] as const;
 export function FeaturedProjects() {
   const [filter, setFilter] = useState<string>("All work");
+  const root = useRef<HTMLElement>(null);
+  useGSAP(
+    () => {
+      const frame = requestAnimationFrame(() => ScrollTrigger.refresh());
+      return () => cancelAnimationFrame(frame);
+    },
+    { scope: root, dependencies: [filter], revertOnUpdate: true },
+  );
   const featured = projects
     .slice(0, 4)
     .filter((project) => filter === "All work" || project.category === filter);
   return (
-    <section id="work" className="section work-section container">
+    <section ref={root} id="work" className="section work-section container">
       <SectionHeading
         label="Selected work"
         title="Built to solve. Made to last."

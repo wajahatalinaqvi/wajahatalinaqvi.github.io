@@ -5,7 +5,7 @@ import { profile } from "@/content/profile";
 export function About() {
   return (
     <section id="about" className="section about-section container">
-      <div className="about-photo" data-reveal>
+      <div className="about-photo">
         <Image
           src="/images/wajahat-naqvi.webp"
           alt="Wajahat Naqvi, Full-Stack Developer based in Lahore"
@@ -13,12 +13,13 @@ export function About() {
           height={720}
           sizes="(max-width: 700px) 90vw, 30vw"
         />
+        <span className="portrait-shutter" aria-hidden="true" />
         <div className="portrait-caption">
           <span>Wajahat Naqvi</span>
           <MapPin size={13} aria-hidden="true" /> Lahore, PK
         </div>
       </div>
-      <div className="about-copy" data-reveal>
+      <div className="about-copy">
         <p className="eyebrow">
           <span />A little about me
         </p>

@@ -14,9 +14,12 @@ export function Button({
     <a
       href={href}
       className={`button ${secondary ? "button-secondary" : "button-primary"}`}
+      data-magnetic
     >
-      {children}
-      <ArrowUpRight size={17} aria-hidden="true" />
+      <span data-magnetic-content>
+        {children}
+        <ArrowUpRight size={17} aria-hidden="true" />
+      </span>
     </a>
   );
 }
