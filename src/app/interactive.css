@@ -201,7 +201,11 @@
   padding: 18px;
   overflow: hidden;
 }
+/* The toolbar stays above the token layer so falling or dragged tokens can
+   never cover (or intercept clicks meant for) Scatter and Reset. */
 .lab-toolbar {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -254,6 +258,8 @@
   display: inline-flex;
 }
 .lab-tokens {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
