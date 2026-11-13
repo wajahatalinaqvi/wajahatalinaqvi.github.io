@@ -67,6 +67,7 @@ export const metadata: Metadata = {
     googleBot: { "max-image-preview": "large" },
   },
   icons: { icon: "/icon.svg" },
+  verification: { google: "tEo1fM4wNdMSfOtfsmYj9SyXsNDRicm3eKm-3C_vpFg" },
 };
 export const viewport: Viewport = {
   themeColor: "#0b0f14",
