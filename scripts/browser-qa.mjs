@@ -42,7 +42,7 @@ try {
   });
   await page.goto(base);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Full-StackDeveloper.",
+    "Wajahat Naqvi, Shopify Full-StackDeveloper.",
   );
   await page.keyboard.press("Tab");
   await expect(

@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { profile } from "@/content/profile";
+import { identityGraph, jsonLd } from "@/lib/seo";
 import "./globals.css";
 import "./experience.css";
 import "./showcase.css";
@@ -77,31 +78,6 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const person = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle: "Shopify Full-Stack Developer",
-    url: profile.url,
-    image: `${profile.url}/images/wajahat-naqvi.webp`,
-    sameAs: [profile.github, profile.linkedin],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Lahore",
-      addressCountry: "PK",
-    },
-    knowsAbout: [
-      "Shopify Development",
-      "Shopify Apps",
-      "Shopify Liquid",
-      "React",
-      "Next.js",
-      "Laravel",
-      "GraphQL",
-      "Ecommerce Development",
-      "AI Workflows",
-    ],
-  };
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body id="top">
@@ -116,9 +92,7 @@ export default function RootLayout({
         <CommandPalette />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(person).replace(/</g, "\\u003c"),
-          }}
+          dangerouslySetInnerHTML={jsonLd(identityGraph())}
         />
       </body>
     </html>

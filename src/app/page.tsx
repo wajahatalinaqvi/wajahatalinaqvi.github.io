@@ -9,6 +9,7 @@ import { Manifesto } from "@/components/sections/Manifesto";
 import { TechMarquee } from "@/components/sections/TechMarquee";
 import { StackLab } from "@/components/interactive/StackLab";
 import { Terminal } from "@/components/interactive/Terminal";
+import { jsonLd, profilePageGraph } from "@/lib/seo";
 import { PageMotion } from "@/components/animations/PageMotion";
 
 export default function Home() {
@@ -27,6 +28,10 @@ export default function Home() {
         <Terminal />
         <Contact />
       </PageMotion>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd(profilePageGraph())}
+      />
     </main>
   );
 }

@@ -14,7 +14,7 @@ export interface Project {
 }
 
 // Evidence: the original public index.html and its existing project assets.
-// Detailed architecture and outcomes remain unverified; do not infer them here.
+// Keep claims to what is listed here; do not invent outcomes or metrics.
 export const projects: Project[] = [
   {
     slug: "rocket-label-lock",
@@ -27,7 +27,7 @@ export const projects: Project[] = [
       "React interface development for a Shopify embedded content-locking application.",
     stack: ["React", "TypeScript", "Polaris", "Redux"],
     image: "/projects/rocket-label-lock.webp",
-    alt: "Rocket Label Lock project preview from the original portfolio",
+    alt: "Rocket Label Lock Shopify app dashboard for restricting store content",
     url: "https://apps.shopify.com/app-lock-smith",
     tone: "sage",
     problem:
@@ -44,7 +44,7 @@ export const projects: Project[] = [
       "Custom Shopify development using Liquid and CSS, with a Figma-led design workflow.",
     stack: ["Shopify", "Liquid", "CSS", "Figma"],
     image: "/projects/djordan-media.webp",
-    alt: "Djordan Media website screenshot preserved from the original portfolio",
+    alt: "Djordan Media custom Shopify storefront home page",
     url: "https://djordanmedia.com/",
     tone: "lilac",
     problem:
@@ -61,7 +61,7 @@ export const projects: Project[] = [
       "Frontend development for an embedded application with React, Polaris, and Redux.",
     stack: ["React", "Polaris", "Redux"],
     image: "/projects/bundle-builder.webp",
-    alt: "Bundle Builder application preview from the original portfolio",
+    alt: "Bundle Builder embedded Shopify app interface screenshot",
     url: "https://swishtag.com/project/Bundle-builder/",
     tone: "sand",
     problem:
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     contribution: "React interface work on a non-embedded Shopify application.",
     stack: ["React", "Shopify", "Node.js"],
     image: "/projects/formatica.webp",
-    alt: "Formatica project screenshot from the existing portfolio",
+    alt: "Formatica Shopify-connected web application screenshot",
     url: "https://swishtag.com/project/formeteca/",
     tone: "blue",
     problem:
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     contribution: "Shopify storefront customization with Liquid and CSS.",
     stack: ["Shopify", "Liquid", "CSS"],
     image: "/projects/efendina.webp",
-    alt: "Efendina storefront screenshot from the existing portfolio",
+    alt: "Efendina Shopify storefront screenshot",
     url: "https://efendina.com/en-gl",
     tone: "sand",
     problem:
@@ -109,7 +109,7 @@ export const projects: Project[] = [
       "React, Polaris, and Liquid development across an application and custom theme.",
     stack: ["React", "Liquid", "Polaris"],
     image: "/projects/legacy-gallery.webp",
-    alt: "Legacy Gallery project preview from the existing portfolio",
+    alt: "Legacy Gallery Shopify storefront screenshot",
     url: "https://swishtag.com/project/legacy-gallry/",
     tone: "sage",
     problem:
@@ -126,7 +126,7 @@ export const projects: Project[] = [
       "React and Polaris interface development with checkout UI extension work.",
     stack: ["React", "Polaris", "Checkout UI"],
     image: "/projects/afterparty.webp",
-    alt: "AfterParty application screenshot from the existing portfolio",
+    alt: "AfterParty Shopify app interface screenshot",
     url: "https://swishtag.com/project/after-party/",
     tone: "lilac",
     problem:
@@ -142,7 +142,7 @@ export const projects: Project[] = [
     contribution: "React, TypeScript, and Polaris frontend development.",
     stack: ["React", "Polaris", "TypeScript"],
     image: "/projects/shopvoice.webp",
-    alt: "ShopVoice application screenshot from the existing portfolio",
+    alt: "ShopVoice embedded Shopify app interface screenshot",
     url: "https://swishtag.com/project/shop-voice/",
     tone: "blue",
     problem:

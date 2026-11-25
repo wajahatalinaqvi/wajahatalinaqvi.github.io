@@ -8,9 +8,13 @@ export const dynamic = "force-static";
 // really changes. Falls back to the build time if git history is unavailable.
 function lastModified(...paths: string[]): Date {
   try {
-    const iso = execFileSync("git", ["log", "-1", "--format=%cI", "--", ...paths], {
-      encoding: "utf8",
-    }).trim();
+    const iso = execFileSync(
+      "git",
+      ["log", "-1", "--format=%cI", "--", ...paths],
+      {
+        encoding: "utf8",
+      },
+    ).trim();
     if (iso) return new Date(iso);
   } catch {
     // not a git checkout
@@ -19,11 +23,19 @@ function lastModified(...paths: string[]): Date {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const projectPages = lastModified("src/content/projects.ts", "src/app/projects");
+  const projectPages = lastModified(
+    "src/content/projects.ts",
+    "src/app/projects",
+  );
   return [
     {
       url: `${profile.url}/`,
-      lastModified: lastModified("src/app", "src/components", "src/content", "public"),
+      lastModified: lastModified(
+        "src/app",
+        "src/components",
+        "src/content",
+        "public",
+      ),
       changeFrequency: "monthly",
       priority: 1,
     },

@@ -16,7 +16,11 @@ export function Hero() {
       </div>
       <HeroField />
       <div className="hero-spotlight" aria-hidden="true" />
-      <h1 id="hero-heading" aria-label="Full-Stack Developer">
+      <h1
+        id="hero-heading"
+        aria-label="Wajahat Naqvi, Shopify Full-Stack Developer"
+      >
+        <span className="sr-only">Wajahat Naqvi, Shopify </span>
         <span className="hero-mask">
           <span className="hero-line">Full-Stack</span>
         </span>
@@ -27,7 +31,7 @@ export function Hero() {
         </span>
       </h1>
       <p className="hero-description" data-hero>
-        Building thoughtful digital products
+        Building Shopify apps, storefronts, and full-stack products
         <br className="desktop-break" /> from interface to infrastructure.
       </p>
       <div className="hero-actions" data-hero>

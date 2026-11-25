@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: true },
+};
 export default function NotFound() {
   return (
     <main id="main-content" tabIndex={-1} className="not-found container">
